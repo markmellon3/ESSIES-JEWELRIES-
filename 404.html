@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>404 – Page Not Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+    }
+
+    .container {
+      text-align: center;
+      padding: 40px 25px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .error-code {
+      font-size: 110px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      opacity: 0.9;
+    }
+
+    .error-title {
+      font-size: 26px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .error-text {
+      margin-top: 15px;
+      font-size: 16px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-home {
+      background: #ffffff;
+      color: #1e3c72;
+    }
+
+    .btn-home:hover {
+      background: #f1f1f1;
+    }
+
+    .btn-back {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-back:hover {
+      background: rgba(255,255,255,0.35);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 480px) {
+      .error-code {
+        font-size: 90px;
+      }
+      .error-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="error-code">404</div>
+    <div class="error-title">Page Not Found</div>
+    <p class="error-text">
+      Sorry, the page you’re looking for doesn’t exist or has been moved.
+    </p>
+
+    <div class="actions">
+      <a href="/" class="btn btn-home">🏠 Go Home</a>
+      <a href="javascript:history.back()" class="btn btn-back">↩ Go Back</a>
+    </div>
+
+    <footer>
+      © <span id="year"></span> Your Website. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").innerText = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Essie jewelry- Great Prices & Huge Selection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <!-- Favicon -->
+<link rel="icon" type="image/png" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
+<link rel="shortcut icon" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
+<link rel="manifest" href="/site.webmanifest" />
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .top-bar {
+      background: #f14c3a;
+      color: white;
+      padding: 8px 0;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    header {
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 2.1rem;
+      font-weight: bold;
+      color: #f14c3a;
+    }
+
+    .logo span {
+      color: #333;
+    }
+
+    .search-bar {
+      flex: 1;
+      max-width: 620px;
+      margin: 0 30px;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 12px 20px;
+      padding-right: 50px;
+      border: 2px solid #f14c3a;
+      border-radius: 4px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .search-bar button {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ff4a2b;
+      border: none;
+      font-size: 1.3rem;
+      color: #f14c3a;
+      cursor: pointer;
+    }
+
+    .nav-icons a {
+      margin-left: 24px;
+      color: #333;
+      text-decoration: none;
+      font-size: 1.4rem;
+      position: relative;
+    }
+
+    .nav-icons .cart::after {
+      content: "3";
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #f14c3a;
+      color: white;
+      font-size: 0.65rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 90px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      margin-bottom: 32px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #f14c3a;
+      color: white;
+      padding: 14px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #d83a2a;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    h2.section-title {
+      margin: 40px 0 24px;
+      font-size: 1.7rem;
+      color: #222;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h2.section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 80px;
+      height: 4px;
+      background: #f14c3a;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .category-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .category-card p {
+      padding: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    }
+
+    .product-img-container {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .product-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12px;
+      transition: transform 0.4s;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .discount-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #f14c3a;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .product-info {
+      padding: 12px;
+    }
+
+    .product-name {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      height: 2.4em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .price-current {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #f14c3a;
+    }
+
+    .price-old {
+      text-decoration: line-through;
+      color: #888;
+      font-size: 0.9rem;
+      margin-left: 8px;
+    }
+
+    .stock-info {
+      font-size: 0.85rem;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      padding: 60px 20px 20px;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+    }
+
+    .footer-container ul {
+      list-style: none;
+    }
+
+    .footer-container a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-container a:hover {
+      text-decoration: underline;
+    }
+    .modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 999;
+}
+
+.modal-content {
+  background: #fff;
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.close {
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap: 15px;
+}
+
+.item-card {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.item-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.item-card button {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.search-suggestions{
+  position:absolute;
+  background:#fff;
+  width:100%;
+  max-width:420px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  z-index:999;
+}
+.search-suggestions div{
+  padding:10px;
+  cursor:pointer;
+  border-bottom:1px solid #eee;
+}
+.search-suggestions div:hover{
+  background:#f5f5f5;
+}
+.search-suggestions small{
+  color:#888;
+}
+
+.flash-section{
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 15px;
+}
+
+/* GRID FIX */
+.flash-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:18px;
+  justify-items:center; /* ⬅ centers cards */
+}
+
+/* CARD SIZE LOCK */
+.flash-card{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  transition:.25s;
+
+  width:100%;
+  max-width:260px; /* ⬅ keeps cards small on laptop */
+}
+
+.flash-card:hover{
+  transform:translateY(-4px);
+}
+
+.flash-img{
+  height:200px;
+  background:#f6f6f6;
+}
+
+.flash-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.flash-body{
+  padding:14px;
+}
+
+.flash-title{
+  font-weight:700;
+  font-size:1rem;
+}
+
+.flash-price{
+  color:#0a7c3b;
+  font-size:1.1rem;
+  font-weight:800;
+}
+
+.flash-old{
+  text-decoration:line-through;
+  color:#aaa;
+  font-size:.85rem;
+}
+
+.flash-badge{
+  display:inline-block;
+  background:#ffebea;
+  color:#d93025;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:.75rem;
+  font-weight:700;
+  margin:6px 0;
+}
+
+.buy-btn{
+  display:block;
+  margin-top:10px;
+  padding:10px;
+  background:#25D366;
+  color:#fff;
+  text-align:center;
+  border-radius:10px;
+  font-weight:700;
+  text-decoration:none;
+}
+
+  </style>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+</head>
+<body>
+
+  <!-- Top announcement bar -->
+  <div class="top-bar">
+    Super Deals • cheap Delivery from Sh50,000 • Up to 70% OFF on Selected Items!
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">ESSIE<span>💎</span></div>
+
+     <div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search for watches, shoes, clothes..." />
+  <button id="searchBtn"><i class="fas fa-search"></i></button>
+  <div id="searchSuggestions" class="search-suggestions"></div>
+</div>
+
+<!-- Search Results -->
+<div id="searchResults" class="search-results"></div>
+
+      <div class="nav-icons">
+        <a href="#"><i class="far fa-user"></i></a>
+        <a href="#" class="cart"><i class="fas fa-shopping-cart"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>ESSIE JEWELRIES </h1>
+  <p>Discover Amazing deals! Today </p>    
+    <a href="#flash" class="btn">Shop Flash Sales →</a>
+  </section>
+
+  <div class="container">
+
+    <!-- Categories -->
+    <h2 class="section-title">Popular Categories</h2>
+    <div class="categories-grid">
+      <div class="category-card" data-category="Perfume"><img src="https://i.ibb.co/7Jy06zv5/download-4.webp" alt="Perfume"><p>Perfumes</p></div>
+      <div class="category-card" data-category="Fashion"><img src="https://images.unsplash.com/photo-1551489186-cf8726f514f8?w=300" alt="Fashion"><p>Fashion</p></div>
+      <div class="category-card" data-category="Laptops"><img src="https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=300" alt="Laptop"><p>Laptops</p></div>
+      <div class="category-card" data-category="Makeup"><img src="https://i.ibb.co/CshWbVF9/images-8.webp" alt="Beauty"><p>Makeup</p></div>
+      <div class="category-card" data-category="Home & Office"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300" alt="Home"><p>Home & Office</p></div>
+      <div class="category-card" data-category="Necklaces"><img src="https://i.ibb.co/Z1TrXMd4/download-2.webp" alt="Necklace"><p>Necklace for women and men</p></div>
+      <div class="category-card" data-category="Watches"><img src="https://i.ibb.co/jkgQpDQn/images-6.webp" alt="Watches"><p>Watches</p></div>
+      <div class="category-card" data-category="Shoes"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Shoes"><p>Shoes</p></div>
+      <div class="category-card" data-category="Bags"><img src="https://i.ibb.co/Fbhh0FWQ/images-3.webp" alt="Bags"><p>Bags</p></div>
+    </div>
+<!-- CATEGORY MODAL -->
+<div id="categoryModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <div id="modalItems" class="modal-grid"></div>
+  </div>
+</div>
+
+    <!-- Flash Sales -->
+    <h2 class="section-title" id="flash">Flash Sales • Limited Time Offers</h2>
+   <section class="flash-section">
+  
+  <div id="flashContainer" class="flash-grid"></div>
+</section>
+
+    <div class="products-grid" id="productsGrid">
+      <!-- Products loaded dynamically from Firebase -->
+    </div>
+
+  </div>
+
+  <!-- Footer with contact info -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <h3>Essie Jewelries</h3>
+        <p>Best online shopping destination in Africa</p>
+      </div>
+      <div>
+        <h3>Customer Service</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Returns & Refunds</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Shipping Info</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Make Money With Us</h3>
+        <ul>
+          <li><a href="#">Sell on Afribuy</a></li>
+          <li><a href="#">Affiliate Program</a></li>
+          <li><a href="#">Become a Vendor</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact Us</h3>
+        <p>Email: support@essiejewlries.com</p>
+        <p>Phone: +256 740 840693 </p>
+        <p>Address: 123 Entebbe Street,Kampala , Uganda </p>
+        <div style="margin-top: 20px;">
+          <a href="#"><i class="fab fa-facebook-f" style="margin-right: 15px; font-size: 1.2rem;"></i></a>
+          <a href="#"><i class="fab fa-twitter" style="margin-right: 15px; font-size: 1.2rem;"></i></a>
+          <a href="#"><i class="fab fa-instagram" style="margin-right: 15px; font-size: 1.2rem;"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:40px; padding-top:30px; border-top:1px solid #444;">
+      © 2026 essis jewelries - All Rights Reserved
+    </div>
+  </footer>
+
+  <script>
+    // Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCI1yBIgDhl7cnKjCzOaWt4vK2Q-DcQrac",
+  authDomain: "essie-db2aa.firebaseapp.com",
+  databaseURL: "https://essie-db2aa-default-rtdb.firebaseio.com",
+  projectId: "essie-db2aa",
+  storageBucket: "essie-db2aa.appspot.com",
+  messagingSenderId: "210132046846",
+  appId: "1:210132046846:web:5fac8fedce997553cda6af",
+  measurementId: "G-V5GJD82P61"  // Optional for Firebase JS SDK v7.20.0 and later
+};
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const productsRef = database.ref('products');
+
+    function renderProducts(products, filter = '') {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+
+      Object.entries(products).forEach(([id, product]) => {
+        if (filter && 
+            !product.name.toLowerCase().includes(filter.toLowerCase()) && 
+            !product.category.toLowerCase().includes(filter.toLowerCase())) {
+          return;
+        }
+
+        const discount = product.discount ? `<div class="discount-tag">-${product.discount}%</div>` : '';
+        const oldPrice = product.oldPrice ? `<span class="price-old">₦ ${product.oldPrice.toLocaleString()}</span>` : '';
+        const stock = product.stock !== undefined ? `<div class="stock-info">Remaining: ${product.stock} pieces</div>` : '';
+
+        const card = `
+          <div class="product-card" onclick="window.location.href='product.html?id=${id}'">
+            <div class="product-img-container">
+              ${discount}
+              <img src="\( {product.image}" alt=" \){product.name}">
+            </div>
+            <div class="product-info">
+              <div class="product-name">${product.name}</div>
+              <div>
+                <span class="price-current">₦ ${product.price.toLocaleString()}</span>
+                ${oldPrice}
+              </div>
+              ${stock}
+            </div>
+          </div>
+        `;
+        grid.innerHTML += card;
+      });
+    }
+
+    // Real-time listener - new products appear instantly
+    productsRef.on('value', (snapshot) => {
+      const products = snapshot.val() || {};
+      renderProducts(products);
+    });
+
+    // Search
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const term = document.getElementById('searchInput').value.trim();
+      productsRef.once('value').then(snapshot => {
+        renderProducts(snapshot.val() || {}, term);
+      });
+    });
+
+    // Press Enter in search bar
+    document.getElementById('searchInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('searchBtn').click();
+      }
+    });
+
+    // Category filter
+    document.querySelectorAll('.category-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const category = card.dataset.category;
+        productsRef.once('value').then(snapshot => {
+          renderProducts(snapshot.val() || {}, category);
+        });
+      });
+    });
+  </script>
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const modal = document.getElementById("categoryModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalItems = document.getElementById("modalItems");
+const closeBtn = document.querySelector(".close");
+
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+
+/* OPEN CATEGORY */
+document.querySelectorAll(".category-card").forEach(card => {
+  card.addEventListener("click", () => {
+    openCategory(card.dataset.category);
+  });
+});
+
+const suggestionsBox = document.getElementById("searchSuggestions");
+
+let allProducts = [];
+
+/* LOAD ALL PRODUCTS ONCE (FAST SEARCH) */
+async function preloadProducts() {
+  const snap = await get(ref(db, "catalogs"));
+  if (!snap.exists()) return;
+
+  allProducts = [];
+
+  snap.forEach(catSnap => {
+    const category = catSnap.key;
+    catSnap.forEach(itemSnap => {
+      allProducts.push({
+        ...itemSnap.val(),
+        category
+      });
+    });
+  });
+}
+preloadProducts();
+
+/* LIVE SEARCH WHILE TYPING */
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase().trim();
+  suggestionsBox.innerHTML = "";
+
+  if (!query) return;
+
+  const matches = allProducts.filter(item =>
+    item.name?.toLowerCase().includes(query) ||
+    item.category?.toLowerCase().includes(query)
+  ).slice(0, 6); // limit suggestions
+
+  if (!matches.length) return;
+
+  matches.forEach(item => {
+    const priceUGX = item.price
+      ? `UGX ${Number(item.price).toLocaleString("en-UG")}`
+      : "UGX 0";
+
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <strong>${item.name}</strong><br>
+      <small>${item.category} • ${priceUGX}</small>
+    `;
+
+    div.onclick = () => {
+      searchInput.value = item.name;
+      suggestionsBox.innerHTML = "";
+      openSearchResults(item.name);
+    };
+
+    suggestionsBox.appendChild(div);
+  });
+});
+
+/* ENTER KEY SEARCH */
+searchInput.addEventListener("keyup", e => {
+  if (e.key === "Enter") openSearchResults(searchInput.value);
+});
+
+/* SEARCH BUTTON */
+searchBtn.addEventListener("click", () => {
+  openSearchResults(searchInput.value);
+});
+
+/* OPEN SEARCH RESULTS IN MODAL */
+function openSearchResults(query) {
+  query = query.toLowerCase().trim();
+  if (!query) return;
+
+  modal.style.display = "block";
+  modalTitle.innerText = `Search results for "${query}"`;
+  modalItems.innerHTML = "";
+
+  let found = false;
+
+  allProducts.forEach(item => {
+    const match =
+      item.name?.toLowerCase().includes(query) ||
+      item.description?.toLowerCase().includes(query) ||
+      item.category?.toLowerCase().includes(query);
+
+    if (match) {
+      found = true;
+      renderItemCard(item);
+    }
+  });
+
+  if (!found) {
+    modalItems.innerHTML = "<p>No matching products found</p>";
+  }
+
+  suggestionsBox.innerHTML = "";
+}
+
+/* SEARCH */
+searchBtn.addEventListener("click", () => searchProducts());
+searchInput.addEventListener("keyup", e => {
+  if (e.key === "Enter") searchProducts();
+});
+
+/* OPEN CATEGORY ITEMS */
+async function openCategory(category) {
+  modal.style.display = "block";
+  modalTitle.innerText = category;
+  modalItems.innerHTML = "Loading...";
+
+  const snap = await get(ref(db, `catalogs/${category}`));
+  renderItems(snap, category);
+}
+
+/* SEARCH PRODUCTS */
+async function searchProducts() {
+  const query = searchInput.value.trim().toLowerCase();
+  if (!query) return;
+
+  modal.style.display = "block";
+  modalTitle.innerText = `Search Results for "${query}"`;
+  modalItems.innerHTML = "Searching...";
+
+  const snap = await get(ref(db, "catalogs"));
+  modalItems.innerHTML = "";
+
+  if (!snap.exists()) {
+    modalItems.innerHTML = "<p>No products found</p>";
+    return;
+  }
+
+  let found = false;
+
+  snap.forEach(catSnap => {
+    const category = catSnap.key;
+
+    catSnap.forEach(itemSnap => {
+      const item = itemSnap.val();
+
+      const match =
+        item.name?.toLowerCase().includes(query) ||
+        item.description?.toLowerCase().includes(query) ||
+        category.toLowerCase().includes(query);
+
+      if (match) {
+        found = true;
+        renderItemCard(item);
+      }
+    });
+  });
+
+  if (!found) modalItems.innerHTML = "<p>No matching products found</p>";
+}
+
+/* RENDER CATEGORY SNAPSHOT */
+function renderItems(snapshot) {
+  modalItems.innerHTML = "";
+
+  if (!snapshot.exists()) {
+    modalItems.innerHTML = "<p>No items found</p>";
+    return;
+  }
+
+  snapshot.forEach(child => renderItemCard(child.val()));
+}
+
+/* RENDER SINGLE ITEM */
+function renderItemCard(item) {
+  const priceUGX = item.price ? `UGX ${Number(item.price).toLocaleString("en-UG")}` : "UGX 0";
+  const oldPriceUGX = item.oldPrice ? `UGX ${Number(item.oldPrice).toLocaleString("en-UG")}` : "-";
+  const discountText = item.discount ? `${item.discount}%` : "-";
+  const stockText = item.stock ?? "0";
+  const phoneText = item.phone ?? "N/A";
+  const descriptionText = item.description ?? "-";
+
+  const message = encodeURIComponent(
+    `🛒 *Product Purchase Inquiry*\n\n` +
+    `*Name:* ${item.name}\n` +
+    `*Price:* ${priceUGX}\n` +
+    `*Old Price:* ${oldPriceUGX}\n` +
+    `*Discount:* ${discountText}\n` +
+    `*Stock:* ${stockText}\n` +
+    `*Contact Phone:* ${phoneText}\n` +
+    `*Description:* ${descriptionText}\n` +
+    `*Image Link:* ${item.image}\n\n` +
+    `Please let me know how I can proceed. Thank you 🙏`
+  );
+
+  const whatsappLink = `https://wa.me/256740840693?text=${message}`;
+
+  modalItems.innerHTML += `
+    <div class="item-card" style="border:1px solid #ddd; padding:12px; margin-bottom:12px; border-radius:10px;">
+      <img src="${item.image}" style="width:100%; max-width:220px; border-radius:8px;"
+        onerror="this.src='https://via.placeholder.com/220'">
+      <h4>${item.name}</h4>
+      <p><strong>${priceUGX}</strong></p>
+      <p>Old Price: ${oldPriceUGX}</p>
+      <p>Discount: ${discountText}</p>
+      <p>Stock: ${stockText}</p>
+      <p>Phone: ${phoneText}</p>
+      <p>${descriptionText}</p>
+      <a href="${whatsappLink}" target="_blank"
+        style="display:inline-block;margin-top:8px;padding:10px 16px;
+        background:#25D366;color:white;border-radius:6px;text-decoration:none;">
+        Buy
+      </a>
+    </div>
+  `;
+}
+
+/* CLOSE MODAL */
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const flashContainer = document.getElementById("flashContainer");
+
+/* AUTO LOAD FLASH SELLS */
+onValue(ref(db, "flashSells"), snap => {
+  flashContainer.innerHTML = "";
+
+  if (!snap.exists()) {
+    flashContainer.innerHTML = "<p>No flash sell items available</p>";
+    return;
+  }
+
+  snap.forEach(child => {
+    const item = child.val();
+
+    const priceUGX = item.price
+      ? `UGX ${Number(item.price).toLocaleString("en-UG")}`
+      : "UGX 0";
+
+    const oldPriceUGX = item.oldPrice
+      ? `UGX ${Number(item.oldPrice).toLocaleString("en-UG")}`
+      : "";
+
+    const discountText = item.discount ? `${item.discount}% OFF` : "";
+    const stockText = item.stock ?? "0";
+    const descriptionText = item.description ?? "-";
+
+    const message = encodeURIComponent(
+      `🛒 *Flash Sell Purchase*\n\n` +
+      `*Name:* ${item.name}\n` +
+      `*Price:* ${priceUGX}\n` +
+      `*Old Price:* ${oldPriceUGX}\n` +
+      `*Discount:* ${discountText}\n` +
+      `*Stock:* ${stockText}\n` +
+      `*Description:* ${descriptionText}\n` +
+      `*Image:* ${item.image}\n\n` +
+      `Hello, I’d like to buy this item.`
+    );
+
+    const whatsappLink = `https://wa.me/2567408406993?text=${message}`;
+
+    flashContainer.innerHTML += `
+      <div class="flash-card">
+        <div class="flash-img">
+          <img src="${item.image}" onerror="this.src='https://via.placeholder.com/300'">
+        </div>
+        <div class="flash-body">
+          <div class="flash-title">${item.name}</div>
+          <div class="flash-price">${priceUGX}</div>
+          ${oldPriceUGX ? `<div class="flash-old">${oldPriceUGX}</div>` : ""}
+          ${discountText ? `<div class="flash-badge">${discountText}</div>` : ""}
+          <p><small>${descriptionText}</small></p>
+          <a href="${whatsappLink}" target="_blank" class="buy-btn">
+            Buy now 
+          </a>
+        </div>
+      </div>
+    `;
+  });
+});
+</script>
+<style>
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.search-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.search-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+}
+
+.search-card h4 {
+  margin: 10px 0 5px;
+}
+
+.search-card p {
+  font-size: 0.9rem;
+  margin: 4px 0;
+}
+
+.search-card button {
+  margin-top: 10px;
+  width: 100%;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+</style>
+<script>
+/* ================= MOBILE NAV TOGGLE ================= */
+const mobileToggle = document.getElementById('mobileToggle');
+const mainNav = document.getElementById('mainNav');
+
+mobileToggle.addEventListener('click', () => {
+  mainNav.classList.toggle('show');
+});
+</script>
+        <script>
+(function () {
+
+  let stopScroll = false;
+  let rafId = null;
+
+  function stopAutoScroll() {
+    stopScroll = true;
+    if (rafId) cancelAnimationFrame(rafId);
+  }
+
+  // Stop animation on any user interaction
+  ["wheel", "touchstart", "mousedown", "keydown"].forEach(event => {
+    window.addEventListener(event, stopAutoScroll, { once: true });
+  });
+
+  window.addEventListener("load", () => {
+    const totalHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+
+    if (totalHeight <= 0) return;
+
+    let startTime = null;
+    const durationDown = 3500;
+    const durationUp = 2500;
+    const pauseAtBottom = 1000;
+
+    function easeInOut(t) {
+      return t < 0.5
+        ? 2 * t * t
+        : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+    function scrollDown(timestamp) {
+      if (stopScroll) return;
+
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / durationDown, 1);
+      const eased = easeInOut(progress);
+
+      window.scrollTo(0, eased * totalHeight);
+
+      if (progress < 1) {
+        rafId = requestAnimationFrame(scrollDown);
+      } else {
+        setTimeout(() => {
+          if (stopScroll) return;
+          startTime = null;
+          rafId = requestAnimationFrame(scrollUp);
+        }, pauseAtBottom);
+      }
+    }
+
+    function scrollUp(timestamp) {
+      if (stopScroll) return;
+
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / durationUp, 1);
+      const eased = easeInOut(progress);
+
+      window.scrollTo(0, totalHeight * (1 - eased));
+
+      if (progress < 1) {
+        rafId = requestAnimationFrame(scrollUp);
+      }
+    }
+
+    rafId = requestAnimationFrame(scrollDown);
+  });
+
+})();
+</script>
+<!-- ================== MAINTENANCE MODE ================== -->
+<div id="maintenanceOverlay" style="
+    display:none; /* hidden by default */
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:url('https://i.ibb.co/KcQjtHr9/retouch-2025061916564417.webp') no-repeat center center/cover;
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:#fff;
+    flex-direction:column;
+">
+  <!-- semi-transparent overlay -->
+  <div style="
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.6);
+  "></div>
+
+  <div style="
+      position:relative;
+      z-index:10;
+      padding:30px 20px;
+  ">
+    <h1 style="font-size:3rem;margin-bottom:20px;">⚠️ Site Under Maintenance</h1>
+    <p style="font-size:1.2rem;">We are currently performing maintenance. Please check back later.</p>
+  </div>
+</div>
+
+<script type="module">
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ===== Use existing Firebase DB ===== */
+let db;
+try {
+  db = window.db || getDatabase(); // assumes your main site already initialized Firebase
+} catch(err) {
+  console.error("Firebase DB not found!", err);
+  db = null;
+}
+
+if(!db) throw new Error("Firebase DB not initialized.");
+
+/* ===== Elements ===== */
+const overlay = document.getElementById("maintenanceOverlay");
+
+/* ===== Firebase Reference ===== */
+const maintenanceRef = ref(db, "maintenance");
+
+/* ===== Listen to maintenance node ===== */
+onValue(maintenanceRef, snapshot => {
+  const isMaintenance = snapshot.exists() && snapshot.val() === true;
+
+  if(isMaintenance){
+    overlay.style.display = "flex"; // show overlay
+    document.body.style.overflow = "hidden"; // prevent scrolling
+  } else {
+    overlay.style.display = "none"; // hide overlay
+    document.body.style.overflow = "auto"; // allow scrolling
+  }
+});
+</script>
+<script>
+/* ================= VISITOR COUNTER ================= */
+/* Uses existing Firebase app */
+
+(function countVisitor() {
+  if (typeof firebase === "undefined") {
+    console.error("Firebase not loaded");
+    return;
+  }
+
+  const db = firebase.database();
+  const hasVisited = localStorage.getItem("hasVisited");
+
+  if (!hasVisited) {
+    const visitorRef = db.ref("totalVisitors");
+
+    visitorRef.transaction(currentCount => {
+      return (currentCount || 0) + 1;
+    });
+
+    localStorage.setItem("hasVisited", "true");
+  }
+})();
+</script>
+<!-- ================= FOOTER ================= -->
+<footer style="background:#ffffff; color:#111827; padding:20px 15px; text-align:center; font-size:14px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+  <p style="margin:0;">Supported by</p>
+  
+  <a href="https://markmellon3.github.io/Aboutmmindustry-/ " target="_blank" 
+     style="display:flex; align-items:center; gap:8px; text-decoration:none; transition:opacity 0.3s;">
+    
+    <!-- Circular Logo -->
+    <img src="https://i.ibb.co/Xxd4xGcM/1000755820.jpg" 
+         alt="Logo" 
+         style="width:32px; height:32px; border-radius:50%; object-fit:cover; border:1px solid #ddd;">
+    
+    <!-- Text -->
+    <span style="
+      padding:4px 10px;
+      background:#3b82f6;
+      color:#fff;
+      font-weight:600;
+      font-size:13px;
+      border-radius:6px;
+      transition:background 0.3s;
+    " 
+    onmouseover="this.style.background='#2563eb';" 
+    onmouseout="this.style.background='#3b82f6';">
+      MARKMELLON
+    </span>
+  </a>
+</footer>
+</body>
+</html>
