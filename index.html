@@ -1183,6 +1183,155 @@ onValue(maintenanceRef, snapshot => {
 });
 </script>
 <script>
+  <script type="module">
+/* ===============================
+   FIREBASE IMPORTS
+================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+
+/* ===============================
+   FIREBASE CONFIG
+================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyAq7NeNLiZYobBVvjD7RMeLP7yyq57hWKw",
+  authDomain: "advertisement-86114.firebaseapp.com",
+  databaseURL: "https://advertisement-86114-default-rtdb.firebaseio.com",
+  projectId: "advertisement-86114",
+  storageBucket: "advertisement-86114.firebasestorage.app",
+  messagingSenderId: "805405982197",
+  appId: "1:805405982197:web:2b19eb58607094aa29f4bc",
+  measurementId: "G-HBG65CH3D0"
+};
+
+/* ===============================
+   INIT FIREBASE
+================================ */
+const app = initializeApp(firebaseConfig);
+getAnalytics(app);
+const db = getDatabase(app);
+
+/* ===============================
+   AD POPUP
+================================ */
+(async function showAdPopup() {
+  try {
+    const adsRef = ref(db, "advertisements");
+    const snapshot = await get(adsRef);
+    const data = snapshot.val();
+
+    if (!data || !data.enabled || !data.images) return;
+
+    const ads = Object.entries(data.images);
+    if (!ads.length) return;
+
+    // Pick random ad
+    const [adId, ad] = ads[Math.floor(Math.random() * ads.length)];
+
+    /* ===============================
+       TRACK IMPRESSION
+    ================================ */
+    const impressionsRef = ref(db, `advertisements/images/${adId}/impressions`);
+    runTransaction(impressionsRef, current => (current || 0) + 1);
+
+    /* ===============================
+       OVERLAY
+    ================================ */
+    const overlay = document.createElement("div");
+    overlay.style.cssText = `
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:999999;
+      padding:16px;
+    `;
+
+    /* ===============================
+       AD BOX
+    ================================ */
+    const box = document.createElement("div");
+    box.style.cssText = `
+      background:#000;
+      border-radius:18px;
+      width:100%;
+      max-width:420px;
+      max-height:85vh;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 30px 60px rgba(0,0,0,.7);
+      cursor:pointer;
+    `;
+
+    /* ===============================
+       IMAGE
+    ================================ */
+    const img = document.createElement("img");
+    img.src = ad.imageUrl;
+    img.alt = "Advertisement";
+    img.style.cssText = `
+      width:100%;
+      height:auto;
+      max-height:85vh;
+      object-fit:contain;
+      display:block;
+    `;
+
+    /* ===============================
+       CLOSE BUTTON
+    ================================ */
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.style.cssText = `
+      position:absolute;
+      top:10px;
+      right:10px;
+      width:34px;
+      height:34px;
+      border:none;
+      border-radius:50%;
+      background:rgba(0,0,0,.6);
+      color:#fff;
+      font-size:20px;
+      cursor:pointer;
+      z-index:2;
+    `;
+
+    /* ===============================
+       EVENTS
+    ================================ */
+    closeBtn.onclick = e => {
+      e.stopPropagation();
+      overlay.remove();
+    };
+
+    box.onclick = async () => {
+      const clicksRef = ref(db, `advertisements/images/${adId}/clicks`);
+      await runTransaction(clicksRef, current => (current || 0) + 1);
+
+      if (ad.linkUrl) window.open(ad.linkUrl, "_blank");
+      overlay.remove();
+    };
+
+    overlay.onclick = () => overlay.remove();
+    box.onclick = e => e.stopPropagation();
+
+    /* ===============================
+       BUILD
+    ================================ */
+    box.appendChild(img);
+    box.appendChild(closeBtn);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+  } catch (err) {
+    console.error("Ad error:", err);
+  }
+})();
+</script>
 /* ================= VISITOR COUNTER ================= */
 /* Uses existing Firebase app */
 
