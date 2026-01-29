@@ -179,7 +179,78 @@
     ">Refresh</button>
   </div>
 </div>
+<!-- IMAGE UPLOAD -->
+<div class="card">
+  <h2>📸 Image Upload (Public Link)</h2>
 
+  <input 
+    type="file" 
+    id="imageFile" 
+    accept="image/*"
+    onchange="previewBeforeUpload()"
+  >
+
+  <img 
+    id="imagePreview"
+    style="
+      display:none;
+      width:100%;
+      max-height:240px;
+      object-fit:cover;
+      border-radius:12px;
+      margin:15px 0;
+    "
+  >
+<div id="imageLoader" class="image-loader"></div>
+  <button class="btn-primary" onclick="uploadImage()">Upload Image</button>
+
+  <input id="imageLink" readonly placeholder="Image URL">
+</div>
+<script>
+const IMGBB_KEY="47f7dff148164ff31a5947e6ee635363";
+async function uploadImage(){
+  const file=imageFile.files[0];
+  if(!file) return alert("Select image");
+  const fd=new FormData();
+  fd.append("image",file);
+  const r=await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,{method:"POST",body:fd});
+  const d=await r.json();
+  imageLink.value=d.data.url;
+}
+document.getElementById("imagePreview").style.display = "none";
+</script>
+<script>
+function refreshPreview(){
+  const iframe = document.getElementById("livePreview");
+  iframe.src = iframe.src;
+}
+</script>
+<script>
+function previewBeforeUpload(){
+  const file = document.getElementById("imageFile").files[0];
+  const preview = document.getElementById("imagePreview");
+  const loader = document.getElementById("imageLoader");
+
+  if(!file){
+    preview.style.display = "none";
+    loader.style.display = "none";
+    return;
+  }
+
+  loader.style.display = "block";
+  preview.style.display = "none";
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    preview.src = e.target.result;
+    preview.style.display = "block";
+    loader.style.display = "none";
+  };
+  reader.readAsDataURL(file);
+}
+document.getElementById("imageLoader").style.display = "block";
+document.getElementById("imageLoader").style.display = "none";
+</script>
     <!-- Add New Product Form -->
     <div class="form-section">
       <h2>Add New Product</h2>
