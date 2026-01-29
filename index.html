@@ -969,7 +969,7 @@ onValue(ref(db, "flashSells"), snap => {
       `Hello, I’d like to buy this item.`
     );
 
-    const whatsappLink = `https://wa.me/256740840693?text=${message}`;
+    const whatsappLink = `https://wa.me/2567408406993?text=${message}`;
 
     flashContainer.innerHTML += `
       <div class="flash-card">
@@ -1183,7 +1183,30 @@ onValue(maintenanceRef, snapshot => {
 });
 </script>
 <script>
-  <script type="module">
+/* ================= VISITOR COUNTER ================= */
+/* Uses existing Firebase app */
+
+(function countVisitor() {
+  if (typeof firebase === "undefined") {
+    console.error("Firebase not loaded");
+    return;
+  }
+
+  const db = firebase.database();
+  const hasVisited = localStorage.getItem("hasVisited");
+
+  if (!hasVisited) {
+    const visitorRef = db.ref("totalVisitors");
+
+    visitorRef.transaction(currentCount => {
+      return (currentCount || 0) + 1;
+    });
+
+    localStorage.setItem("hasVisited", "true");
+  }
+})();
+</script>
+<script type="module">
 /* ===============================
    FIREBASE IMPORTS
 ================================ */
@@ -1329,29 +1352,6 @@ const db = getDatabase(app);
 
   } catch (err) {
     console.error("Ad error:", err);
-  }
-})();
-</script>
-/* ================= VISITOR COUNTER ================= */
-/* Uses existing Firebase app */
-
-(function countVisitor() {
-  if (typeof firebase === "undefined") {
-    console.error("Firebase not loaded");
-    return;
-  }
-
-  const db = firebase.database();
-  const hasVisited = localStorage.getItem("hasVisited");
-
-  if (!hasVisited) {
-    const visitorRef = db.ref("totalVisitors");
-
-    visitorRef.transaction(currentCount => {
-      return (currentCount || 0) + 1;
-    });
-
-    localStorage.setItem("hasVisited", "true");
   }
 })();
 </script>
