@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  background:#0f172a;
+  color:#fff;
+  font-family:Arial;
+  padding:20px;
+}
+.card{
+  max-width:400px;
+  margin:auto;
+  background:#1e293b;
+  border-radius:14px;
+  overflow:hidden;
+}
+img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+}
+.info{
+  padding:16px;
+}
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  font-size:16px;
+  font-weight:bold;
+}
+button.whatsapp{
+  background:#25D366;
+  color:#000;
+}
+
+button.whatsapp:hover{
+  background:#1ebe5d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <img id="image">
+  <div class="info">
+    <h2 id="name"></h2>
+    <p id="desc"></p>
+    <h3 id="price"></h3>
+    
+   <button class="whatsapp" onclick="buy()">PROCCED PAYMENT ON WHATSAPP</button>
+  </div>
+</div>
+
+<script>
+const p = Object.fromEntries(new URLSearchParams(location.search));
+
+image.src = p.image;
+name.textContent = p.name;
+desc.textContent = p.description || "";
+price.textContent = "UGX " + Number(p.price).toLocaleString();
+
+function pay(){
+  alert("Integrate Mobile Money / PayPal here");
+}
+
+const WHATSAPP_NUMBER = "+256740840693";
+
+function buy(){
+  const message = `
+Hello ESSIES-JEWELRIES  👋
+
+I want to buy:
+🛒 *${p.name}*
+
+💰 Price: UGX ${Number(p.price).toLocaleString()}
+💸 Old Price: UGX ${Number(p.oldPrice || 0).toLocaleString()}
+🔥 Discount: ${p.discount || 0}%
+📦 Stock: ${p.stock || "N/A"}
+
+🖼 Image: ${p.image}
+`;
+
+  const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+  window.open(url, "_blank");
+}
+</script>
+<script>
+// ===== PERMANENT WATERMARK (LOGO + TEXT) =====
+
+const watermarkLogo = "https://i.ibb.co/ns60DjSG/1000762517.webp";
+const watermarkText = "ESSIES-JEWELRIES SHOP/markmellon.com";
+const logoSize = 40;
+const opacity = 0.45;
+
+function watermarkImage(img) {
+  if (img.dataset.watermarked) return;
+
+  // Force crossOrigin BEFORE loading
+  img.crossOrigin = "anonymous";
+
+  const apply = () => {
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (!w || !h) return;
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = w;
+    canvas.height = h;
+
+    // Draw original image
+    ctx.drawImage(img, 0, 0, w, h);
+
+    const logo = new Image();
+    logo.crossOrigin = "anonymous";
+    logo.src = watermarkLogo;
+
+    logo.onload = () => {
+      const padding = 15;
+      const logoW = logoSize;
+      const logoH = (logo.height / logo.width) * logoSize;
+
+      const x = w - logoW - padding;
+      const y = h - logoH - padding;
+
+      // Logo watermark
+      ctx.globalAlpha = opacity;
+      ctx.drawImage(logo, x, y, logoW, logoH);
+
+      // Text watermark
+      ctx.font = `bold ${Math.max(18, w * 0.035)}px Arial`;
+      ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+      ctx.textAlign = "right";
+      ctx.fillText(watermarkText, w - padding, y - 8);
+
+      ctx.globalAlpha = 1;
+
+      // Replace image with watermarked version
+      img.src = canvas.toDataURL("image/png");
+      img.dataset.watermarked = "true";
+    };
+  };
+
+  // If image already loaded
+  if (img.complete) {
+    apply();
+  } else {
+    img.onload = apply;
+  }
+}
+
+// Apply to all images
+function applyWatermarks() {
+  document.querySelectorAll("img").forEach(img => {
+    if (!img.dataset.watermarked) watermarkImage(img);
+  });
+}
+
+// Initial run
+window.addEventListener("load", applyWatermarks);
+
+// Watch dynamically added images (Firebase)
+const observer = new MutationObserver(applyWatermarks);
+observer.observe(document.body, { childList: true, subtree: true });
+</script>
+<script type="module">
+/* ===============================
+   FIREBASE IMPORTS
+================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+
+/* ===============================
+   FIREBASE CONFIG
+================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyAq7NeNLiZYobBVvjD7RMeLP7yyq57hWKw",
+  authDomain: "advertisement-86114.firebaseapp.com",
+  databaseURL: "https://advertisement-86114-default-rtdb.firebaseio.com",
+  projectId: "advertisement-86114",
+  storageBucket: "advertisement-86114.firebasestorage.app",
+  messagingSenderId: "805405982197",
+  appId: "1:805405982197:web:2b19eb58607094aa29f4bc"
+};
+
+/* ===============================
+   INIT FIREBASE
+================================ */
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ===============================
+   SHOW AD POPUP
+================================ */
+(async function showAdPopup() {
+  try {
+    const snap = await get(ref(db, "advertisements"));
+    const data = snap.val();
+
+    if (!data || !data.enabled || !data.images) return;
+
+    const ads = Object.entries(data.images);
+    if (!ads.length) return;
+
+    /* PICK RANDOM AD */
+    const [adId, ad] = ads[Math.floor(Math.random() * ads.length)];
+
+    /* TRACK IMPRESSION */
+    runTransaction(
+      ref(db, `advertisements/images/${adId}/impressions`),
+      v => (v || 0) + 1
+    );
+
+    /* ===============================
+       OVERLAY
+    ================================ */
+    const overlay = document.createElement("div");
+    overlay.style.cssText = `
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:999999;
+      padding:16px;
+    `;
+
+    /* ===============================
+       AD CONTAINER
+    ================================ */
+    const box = document.createElement("div");
+    box.style.cssText = `
+      background:#000;
+      border-radius:18px;
+      width:100%;
+      max-width:420px;
+      max-height:90vh;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 30px 60px rgba(0,0,0,.7);
+    `;
+
+    /* ===============================
+       AD IMAGE (CLICKABLE)
+    ================================ */
+    const img = document.createElement("img");
+    img.src = ad.imageUrl;
+    img.alt = "Advertisement";
+    img.style.cssText = `
+      width:100%;
+      height:auto;
+      max-height:90vh;
+      object-fit:contain;
+      display:block;
+      cursor:pointer;
+    `;
+
+    img.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      await runTransaction(
+        ref(db, `advertisements/images/${adId}/clicks`),
+        v => (v || 0) + 1
+      );
+
+      if (ad.linkUrl) {
+        window.open(ad.linkUrl, "_blank", "noopener");
+      }
+
+      overlay.remove();
+    });
+
+    /* ===============================
+       CLOSE BUTTON (ONLY CLOSES)
+    ================================ */
+    const closeBtn = document.createElement("button");
+    closeBtn.innerHTML = "&times;";
+    closeBtn.style.cssText = `
+      position:absolute;
+      top:10px;
+      right:10px;
+      width:36px;
+      height:36px;
+      border:none;
+      border-radius:50%;
+      background:rgba(0,0,0,.65);
+      color:#fff;
+      font-size:22px;
+      cursor:pointer;
+      z-index:10;
+    `;
+
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      overlay.remove();
+    });
+
+    /* BLOCK PROPAGATION */
+    box.addEventListener("click", e => e.stopPropagation());
+
+    /* BUILD DOM */
+    box.appendChild(img);
+    box.appendChild(closeBtn);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+  } catch (err) {
+    console.error("Advertisement error:", err);
+  }
+})();
+</script>
+</body>
+</html>
