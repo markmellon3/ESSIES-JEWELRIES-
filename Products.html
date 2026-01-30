@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ESSIES-JEWELRIES SHOP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  background:#0f172a;
+  font-family:Arial, sans-serif;
+  color:#fff;
+}
+h1,h2{
+  padding:10px 20px;
+}
+.section{
+  padding:10px 20px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+  gap:10px;
+}
+
+.card{
+  background:#1e293b;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.card img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+
+.card-body{
+  padding:6px;
+}
+
+.card-body h3{
+  font-size:14px;
+  margin:4px 0;
+}
+
+.price{
+  font-size:13px;
+}
+
+.old{
+  font-size:11px;
+}
+
+button{
+  width:100%;
+  margin-top:6px;
+  padding:6px;
+  border:none;
+  border-radius:6px;
+  background:#22c55e;
+  font-weight:bold;
+  font-size:12px;
+  cursor:pointer;
+}
+.flash{
+  background:#7c2d12;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🛒 ESSIES-JEWELRIES SHOP </h1>
+
+<!-- FLASH SELLS -->
+
+<div id="flashSection" class="section">
+  <h2>🔥 Flash Sells</h2>
+  <div id="flashGrid" class="grid"></div>
+</div>
+
+<div id="catalogs"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCI1yBIgDhl7cnKjCzOaWt4vK2Q-DcQrac",
+  authDomain: "essie-db2aa.firebaseapp.com",
+  databaseURL: "https://essie-db2aa-default-rtdb.firebaseio.com",
+  projectId: "essie-db2aa",
+  storageBucket: "essie-db2aa.appspot.com",
+  messagingSenderId: "210132046846",
+  appId: "1:210132046846:web:5fac8fedce997553cda6af",
+  measurementId: "G-V5GJD82P61" 
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ===== FLASH SELLS ===== */
+const flashGrid = document.getElementById("flashGrid");
+onValue(ref(db, "flashSells"), snap => {
+  flashGrid.innerHTML = "";
+  if (!snap.exists()) {
+    flashGrid.innerHTML = "<p>No flash sells available</p>";
+    return;
+  }
+
+  snap.forEach(itemSnap => {
+    const p = itemSnap.val();
+    const card = document.createElement("div");
+    card.className = "card flash";
+    card.innerHTML = `
+      <img src="${p.image}">
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <div class="price">UGX ${Number(p.price).toLocaleString()}</div>
+        <div class="old">UGX ${Number(p.oldPrice || 0).toLocaleString()}</div>
+        <button>BUY NOW</button>
+      </div>
+    `;
+    card.querySelector("button").addEventListener("click", () => {
+      buyFlash(p);
+    });
+    flashGrid.appendChild(card);
+  });
+});
+
+/* ===== CATALOGS ===== */
+const wrapper = document.getElementById("catalogs");
+onValue(ref(db, "catalogs"), snap => {
+  wrapper.innerHTML = "";
+
+  snap.forEach(categorySnap => {
+    const categoryName = categorySnap.key;
+    const section = document.createElement("div");
+    section.className = "section";
+    section.innerHTML = `<h2>${categoryName}</h2><div class="grid"></div>`;
+    const grid = section.querySelector(".grid");
+
+    categorySnap.forEach(itemSnap => {
+      const p = itemSnap.val();
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${p.image}">
+        <div class="card-body">
+          <h3>${p.name}</h3>
+          <div class="price">UGX ${Number(p.price).toLocaleString()}</div>
+          <div class="old">UGX ${Number(p.oldPrice || 0).toLocaleString()}</div>
+          <button>BUY NOW</button>
+        </div>
+      `;
+      card.querySelector("button").addEventListener("click", () => {
+        buyCatalog(p);
+      });
+      grid.appendChild(card);
+    });
+
+    wrapper.appendChild(section);
+  });
+});
+
+/* ===== BUY FUNCTIONS ===== */
+// Send product info to payment.html via URL parameters
+function buyCatalog(product) {
+  const params = new URLSearchParams({
+    name: product.name,
+    price: product.price,
+    oldPrice: product.oldPrice || 0,
+    image: product.image,
+    discount: product.discount || 0,
+    stock: product.stock || "N/A"
+  }).toString();
+  location.href = "payment.html?" + params;
+}
+
+function buyFlash(product) {
+  const params = new URLSearchParams({
+    name: product.name,
+    price: product.price,
+    oldPrice: product.oldPrice || 0,
+    image: product.image,
+    discount: product.discount || 0,
+    stock: product.stock || "N/A"
+  }).toString();
+  location.href = "payment.html?" + params;
+}
+</script>
+<script>
+// ===== PERMANENT WATERMARK (LOGO + TEXT) =====
+
+const watermarkLogo = "https://i.ibb.co/ns60DjSG/1000762517.webp";
+const watermarkText = "ESSIES-JEWELRIES SHOP/markmellon.com";
+const logoSize = 40;
+const opacity = 0.45;
+
+function watermarkImage(img) {
+  if (img.dataset.watermarked) return;
+
+  // Force crossOrigin BEFORE loading
+  img.crossOrigin = "anonymous";
+
+  const apply = () => {
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (!w || !h) return;
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = w;
+    canvas.height = h;
+
+    // Draw original image
+    ctx.drawImage(img, 0, 0, w, h);
+
+    const logo = new Image();
+    logo.crossOrigin = "anonymous";
+    logo.src = watermarkLogo;
+
+    logo.onload = () => {
+      const padding = 15;
+      const logoW = logoSize;
+      const logoH = (logo.height / logo.width) * logoSize;
+
+      const x = w - logoW - padding;
+      const y = h - logoH - padding;
+
+      // Logo watermark
+      ctx.globalAlpha = opacity;
+      ctx.drawImage(logo, x, y, logoW, logoH);
+
+      // Text watermark
+      ctx.font = `bold ${Math.max(18, w * 0.035)}px Arial`;
+      ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+      ctx.textAlign = "right";
+      ctx.fillText(watermarkText, w - padding, y - 8);
+
+      ctx.globalAlpha = 1;
+
+      // Replace image with watermarked version
+      img.src = canvas.toDataURL("image/png");
+      img.dataset.watermarked = "true";
+    };
+  };
+
+  // If image already loaded
+  if (img.complete) {
+    apply();
+  } else {
+    img.onload = apply;
+  }
+}
+
+// Apply to all images
+function applyWatermarks() {
+  document.querySelectorAll("img").forEach(img => {
+    if (!img.dataset.watermarked) watermarkImage(img);
+  });
+}
+
+// Initial run
+window.addEventListener("load", applyWatermarks);
+
+// Watch dynamically added images (Firebase)
+const observer = new MutationObserver(applyWatermarks);
+observer.observe(document.body, { childList: true, subtree: true });
+</script>
+<script type="module">
+/* ===============================
+   FIREBASE IMPORTS
+================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+
+/* ===============================
+   FIREBASE CONFIG
+================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyAq7NeNLiZYobBVvjD7RMeLP7yyq57hWKw",
+  authDomain: "advertisement-86114.firebaseapp.com",
+  databaseURL: "https://advertisement-86114-default-rtdb.firebaseio.com",
+  projectId: "advertisement-86114",
+  storageBucket: "advertisement-86114.firebasestorage.app",
+  messagingSenderId: "805405982197",
+  appId: "1:805405982197:web:2b19eb58607094aa29f4bc"
+};
+
+/* ===============================
+   INIT FIREBASE
+================================ */
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ===============================
+   SHOW AD POPUP
+================================ */
+(async function showAdPopup() {
+  try {
+    const snap = await get(ref(db, "advertisements"));
+    const data = snap.val();
+
+    if (!data || !data.enabled || !data.images) return;
+
+    const ads = Object.entries(data.images);
+    if (!ads.length) return;
+
+    /* PICK RANDOM AD */
+    const [adId, ad] = ads[Math.floor(Math.random() * ads.length)];
+
+    /* TRACK IMPRESSION */
+    runTransaction(
+      ref(db, `advertisements/images/${adId}/impressions`),
+      v => (v || 0) + 1
+    );
+
+    /* ===============================
+       OVERLAY
+    ================================ */
+    const overlay = document.createElement("div");
+    overlay.style.cssText = `
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:999999;
+      padding:16px;
+    `;
+
+    /* ===============================
+       AD CONTAINER
+    ================================ */
+    const box = document.createElement("div");
+    box.style.cssText = `
+      background:#000;
+      border-radius:18px;
+      width:100%;
+      max-width:420px;
+      max-height:90vh;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 30px 60px rgba(0,0,0,.7);
+    `;
+
+    /* ===============================
+       AD IMAGE (CLICKABLE)
+    ================================ */
+    const img = document.createElement("img");
+    img.src = ad.imageUrl;
+    img.alt = "Advertisement";
+    img.style.cssText = `
+      width:100%;
+      height:auto;
+      max-height:90vh;
+      object-fit:contain;
+      display:block;
+      cursor:pointer;
+    `;
+
+    img.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      await runTransaction(
+        ref(db, `advertisements/images/${adId}/clicks`),
+        v => (v || 0) + 1
+      );
+
+      if (ad.linkUrl) {
+        window.open(ad.linkUrl, "_blank", "noopener");
+      }
+
+      overlay.remove();
+    });
+
+    /* ===============================
+       CLOSE BUTTON (ONLY CLOSES)
+    ================================ */
+    const closeBtn = document.createElement("button");
+    closeBtn.innerHTML = "&times;";
+    closeBtn.style.cssText = `
+      position:absolute;
+      top:10px;
+      right:10px;
+      width:36px;
+      height:36px;
+      border:none;
+      border-radius:50%;
+      background:rgba(0,0,0,.65);
+      color:#fff;
+      font-size:22px;
+      cursor:pointer;
+      z-index:10;
+    `;
+
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      overlay.remove();
+    });
+
+    /* BLOCK PROPAGATION */
+    box.addEventListener("click", e => e.stopPropagation());
+
+    /* BUILD DOM */
+    box.appendChild(img);
+    box.appendChild(closeBtn);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+  } catch (err) {
+    console.error("Advertisement error:", err);
+  }
+})();
+</script>
+</body>
+</html>
