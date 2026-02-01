@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> ESSIES-JEWELRIES ADMIN - Manage Products</title>
+  <title>ESSIES-JEWELRIES Admin - Manage Products</title>
    <!-- Favicon -->
 <link rel="icon" type="image/png" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
@@ -257,7 +257,8 @@ document.getElementById("imageLoader").style.display = "none";
       <div id="status" class="status"></div>
       <form id="addProductForm">
         <div class="form-grid">
-          <input type="text" id="name" placeholder="Product Name" required>
+           <input type="text" id="shopName" placeholder="Shop Name" required>
+          <input type="text" id="productName" placeholder="Product Name" required>
           <input type="number" id="price" placeholder="Current Price (sh)" required>
           <input type="number" id="oldPrice" placeholder="Old Price (optional)">
           <input type="number" id="discount" placeholder="Discount % (optional)">
@@ -270,7 +271,7 @@ document.getElementById("imageLoader").style.display = "none";
             <option>Fashion</option>
             <option>Laptops</option>
             <option>Makeup</option>
-            <option>Home & Office</option>
+            <option>Home&Office</option>
             <option>Necklaces</option>
             <option>Watches</option>
             <option>Shoes</option>
@@ -333,7 +334,9 @@ import {
   update 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-/* Firebase Config */
+/* =====================
+   FIREBASE INIT
+===================== */
 const firebaseConfig = {
   apiKey: "AIzaSyCI1yBIgDhl7cnKjCzOaWt4vK2Q-DcQrac",
   authDomain: "essie-db2aa.firebaseapp.com",
@@ -342,63 +345,75 @@ const firebaseConfig = {
   storageBucket: "essie-db2aa.appspot.com",
   messagingSenderId: "210132046846",
   appId: "1:210132046846:web:5fac8fedce997553cda6af",
-  measurementId: "G-V5GJD82P61"
+  measurementId: "G-V5GJD82P61"  // Optional for Firebase JS SDK v7.20.0 and later
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/* DOM */
+/* =====================
+   DOM ELEMENTS
+===================== */
 const addForm = document.getElementById("addProductForm");
 const statusEl = document.getElementById("status");
 const tableBody = document.querySelector("#productsTable tbody");
 
-const nameEl = document.getElementById("name");
+const shopNameEl = document.getElementById("shopName");
+const productNameEl = document.getElementById("productName");
 const priceEl = document.getElementById("price");
 const oldPriceEl = document.getElementById("oldPrice");
 const discountEl = document.getElementById("discount");
 const imageEl = document.getElementById("image");
 const stockEl = document.getElementById("stock");
+const phoneEl = document.getElementById("phone");
 const categorySelect = document.getElementById("category");
 const descriptionEl = document.getElementById("description");
-const phoneEl = document.getElementById("phone");
 
-/* STATUS MESSAGE */
-function showStatus(msg, error = false){
+/* =====================
+   STATUS MESSAGE
+===================== */
+function showStatus(msg, error = false) {
   statusEl.textContent = msg;
   statusEl.className = "status " + (error ? "error" : "success");
   setTimeout(() => statusEl.textContent = "", 4000);
 }
 
-/* ADD PRODUCT */
+/* =====================
+   ADD PRODUCT
+===================== */
 addForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const category = categorySelect.value;
-  if (!category) return showStatus("Select a category", true);
+  if (!categorySelect.value) {
+    return showStatus("Select a category", true);
+  }
 
   const product = {
-    name: nameEl.value.trim(),
+    shopName: shopNameEl.value.trim(),
+    productName: productNameEl.value.trim(),
+    name: `${productNameEl.value.trim()} — ${shopNameEl.value.trim()}`,
     price: Number(priceEl.value),
     oldPrice: oldPriceEl.value ? Number(oldPriceEl.value) : null,
     discount: discountEl.value ? Number(discountEl.value) : null,
     image: imageEl.value.trim(),
     stock: Number(stockEl.value),
-    description: descriptionEl.value.trim() || "",
     phone: phoneEl.value.trim(),
+    description: descriptionEl.value.trim() || "",
     createdAt: Date.now()
   };
 
   try {
-    await push(ref(db, `catalogs/${category}`), product);
+    await push(ref(db, `catalogs/${categorySelect.value}`), product);
     showStatus("Product added successfully");
     addForm.reset();
-  } catch(err) {
+    updatePreview();
+  } catch (err) {
     showStatus(err.message, true);
   }
 });
 
-/* LOAD PRODUCTS */
+/* =====================
+   LOAD PRODUCTS
+===================== */
 function loadProducts() {
   onValue(ref(db, "catalogs"), snapshot => {
     tableBody.innerHTML = "";
@@ -410,77 +425,87 @@ function loadProducts() {
 
     snapshot.forEach(catSnap => {
       const category = catSnap.key;
+
       catSnap.forEach(itemSnap => {
         const item = itemSnap.val();
         const id = itemSnap.key;
-        const oldPrice = item.oldPrice ? `UGX ${Number(item.oldPrice).toLocaleString("en-UG")}` : '-';
-const price = item.price ? `UGX ${Number(item.price).toLocaleString("en-UG")}` : 'UGX 0';
-const discount = item.discount ? `${item.discount}%` : '-';
 
-tableBody.innerHTML += `
-  <tr>
-    <td>
-      <img src="${item.image}" class="img-preview" onerror="this.src='https://via.placeholder.com/60'">
-    </td>
-    <td>${item.name}</td>
-    <td>${category}</td>
-    <td>${price}</td>
-    <td>${oldPrice}</td>
-    <td>${discount}</td>
-    <td>${item.stock}</td>
-    <td>${item.phone}</td>
-    <td>
-      <button onclick="editProduct('${category}','${id}')">✏ Edit</button>
-      <button class="delete-btn" onclick="deleteProduct('${category}','${id}')">
-        <i class="fas fa-trash"></i>
-      </button>
-    </td>
-  </tr>
-`;
+        const price = item.price ? `UGX ${Number(item.price).toLocaleString("en-UG")}` : "UGX 0";
+        const oldPrice = item.oldPrice ? `UGX ${Number(item.oldPrice).toLocaleString("en-UG")}` : "-";
+        const discount = item.discount ? `${item.discount}%` : "-";
+
+        tableBody.innerHTML += `
+          <tr>
+            <td>
+              <img src="${item.image}" class="img-preview" onerror="this.src='https://via.placeholder.com/60'">
+            </td>
+            <td>
+              <strong>${item.productName}</strong><br>
+              <small>${item.shopName}</small>
+            </td>
+            <td>${category}</td>
+            <td>${price}</td>
+            <td>${oldPrice}</td>
+            <td>${discount}</td>
+            <td>${item.stock}</td>
+            <td>${item.phone}</td>
+            <td>
+              <button onclick="editProduct('${category}','${id}')">✏ Edit</button>
+              <button class="delete-btn" onclick="deleteProduct('${category}','${id}')">🗑</button>
+            </td>
+          </tr>
+        `;
       });
     });
   });
 }
 
-/* DELETE PRODUCT */
+/* =====================
+   DELETE PRODUCT
+===================== */
 window.deleteProduct = async (category, id) => {
   if (!confirm("Delete this product?")) return;
+
   try {
     await remove(ref(db, `catalogs/${category}/${id}`));
     showStatus("Product deleted");
-  } catch(err) {
+  } catch (err) {
     showStatus(err.message, true);
   }
 };
 
-/* EDIT PRODUCT */
+/* =====================
+   EDIT PRODUCT
+===================== */
 window.editProduct = async (category, id) => {
-  const newName = prompt("New name:");
-  const newPrice = prompt("New price:");
-  const newImage = prompt("New image URL:");
-  const newStock = prompt("New stock quantity:");
-  const newPhone = prompt("New phone number:");
+  const productName = prompt("Product name:");
+  const shopName = prompt("Shop name:");
+  const price = prompt("Price:");
+  const image = prompt("Image URL:");
+  const stock = prompt("Stock quantity:");
+  const phone = prompt("Phone number:");
 
-  if (!newName || !newPrice || !newImage || !newStock || !newPhone) return;
+  if (!productName || !shopName || !price || !image || !stock || !phone) return;
 
   try {
     await update(ref(db, `catalogs/${category}/${id}`), {
-      name: newName,
-      price: Number(newPrice),
-      image: newImage,
-      stock: Number(newStock),
-      phone: newPhone
+      productName,
+      shopName,
+      name: `${productName} — ${shopName}`,
+      price: Number(price),
+      image,
+      stock: Number(stock),
+      phone
     });
     showStatus("Product updated");
-  } catch(err) {
+  } catch (err) {
     showStatus(err.message, true);
   }
 };
 
-/* START */
-loadProducts();
-
-/* LIVE PREVIEW */
+/* =====================
+   LIVE PREVIEW
+===================== */
 const previewImage = document.getElementById("previewImage");
 const previewName = document.getElementById("previewName");
 const previewPrice = document.getElementById("previewPrice");
@@ -491,8 +516,11 @@ const previewPhone = document.getElementById("previewPhone");
 const previewDescription = document.getElementById("previewDescription");
 
 function updatePreview() {
-  previewImage.src = imageEl.value || 'https://via.placeholder.com/100';
-  previewName.textContent = nameEl.value || "Product Name";
+  previewImage.src = imageEl.value || "https://via.placeholder.com/100";
+  previewName.textContent =
+    productNameEl.value && shopNameEl.value
+      ? `${productNameEl.value} — ${shopNameEl.value}`
+      : "Product Name — Shop Name";
   previewPrice.textContent = priceEl.value ? `UGX ${Number(priceEl.value).toLocaleString("en-UG")}` : "UGX 0";
   previewOldPrice.textContent = oldPriceEl.value ? `Old Price: UGX ${Number(oldPriceEl.value).toLocaleString("en-UG")}` : "Old Price: -";
   previewDiscount.textContent = discountEl.value ? `Discount: ${discountEl.value}%` : "Discount: -";
@@ -501,11 +529,26 @@ function updatePreview() {
   previewDescription.textContent = descriptionEl.value ? `Description: ${descriptionEl.value}` : "Description: -";
 }
 
-// Add event listeners to update preview as you type
-[nameEl, priceEl, oldPriceEl, discountEl, imageEl, stockEl, phoneEl, descriptionEl].forEach(el => {
-  el.addEventListener("input", updatePreview);
-});
+/* =====================
+   PREVIEW LISTENERS
+===================== */
+[
+  shopNameEl,
+  productNameEl,
+  priceEl,
+  oldPriceEl,
+  discountEl,
+  imageEl,
+  stockEl,
+  phoneEl,
+  descriptionEl
+].forEach(el => el.addEventListener("input", updatePreview));
 
+/* =====================
+   START
+===================== */
+loadProducts();
+updatePreview();
 </script>
 <!-- ================== FLASH SELLS ADMIN MODULE ================== -->
 <div id="flashSellsAdmin" style="margin-top:40px;">
@@ -781,7 +824,7 @@ toggleBtn.addEventListener("click", async () => {
     left:0;
     width:100%;
     height:100%;
-    background:url('https://i.ibb.co/6R11H5TF/IMG-20260126-WA0006.webp') no-repeat center center/cover;
+    background:url('https://i.ibb.co/G4Xjn0bn/Screenshot-20260201-212434-Instagram.webp') no-repeat center center/cover;
     display:flex;
     justify-content:center;
     align-items:center;
