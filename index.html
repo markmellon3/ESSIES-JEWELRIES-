@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+ 
+  <title>Essie jewelry- Great Prices & Huge Selection</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
+  <link rel="shortcut icon" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
+  <link rel="manifest" href="/site.webmanifest" />
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<style>
+  /* Top Announcement Marquee */
+  .top-bar {
+    background: #f14c3a;
+    color: white;
+    padding: 10px 0;
+    overflow: hidden; 
+    display: flex;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .top-bar-track {
+    display: flex;
+    flex-shrink: 0;
+    animation: slideRightToLeft 30s linear infinite; /* 30s duration, loops forever */
+  }
+
+  .top-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding-right: 60px; /* Creates space before the text repeats */
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .top-bar-link {
+    color: #fff;
+    font-weight: 800;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .top-bar-link:hover {
+    color: #ffebea;
+  }
+
+  @keyframes slideRightToLeft {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); } /* Moves exactly halfway to seamlessly loop */
+  }
+
+  /* Pause animation on hover */
+  .top-bar:hover .top-bar-track {
+    animation-play-state: paused;
+  }
+</style>
+
+<!-- Sliding Top Announcement Bar -->
+<div class="top-bar">
+  <div class="top-bar-track">
+    <!-- Duplicate 1 (Required for seamless loop) -->
+    <div class="top-bar-item">
+      <span>Super Deals • cheap Delivery from Sh50,000 • Up to 70% OFF on Selected Items!</span>
+      <!-- ⬇️ CHANGE THE href BELOW TO YOUR ACTUAL WEBSITE LINK ⬇️ -->
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+    </div>
+
+    <!-- Duplicate 2 (Required for seamless loop) -->
+    <div class="top-bar-item">
+      <span>VISIT SMMARIA PANEL TO BOOST SOCIAL MEDIA PLATFORM AT LOW COSTS</span>
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+    </div>
+  </div>
+</div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">ESSIE FASHION</div>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for watches, shoes, clothes..." />
+        <button id="searchBtn"><i class="fas fa-search"></i></button>
+        <div id="searchSuggestions" class="search-suggestions"></div>
+      </div>
+
+      <div class="nav-icons">
+        <a href="#"><i class="far fa-user"></i></a>
+        <a href="#" class="cart"><i class="fas fa-shopping-cart"></i></a>
+      </div>
+    </div>
+
+    <!-- Mega Menu Navigation -->
+    <nav class="mega-menu-nav">
+      <ul class="nav-list">
+        <li class="nav-item mega-menu-item">
+          <a href="#">Jewelry <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+          <div class="mega-menu">
+            <div class="mega-menu-col">
+              <h4>Categories</h4>
+              <ul>
+                <li><a href="#" data-category="Necklaces">Necklaces</a></li>
+                <li><a href="#" data-category="Earrings">Earrings</a></li>
+                <li><a href="#" data-category="Bracelets">Bracelets</a></li>
+                <li><a href="#" data-category="Rings">Rings</a></li>
+              </ul>
+            </div>
+            <div class="mega-menu-col">
+              <h4>Featured</h4>
+              <ul>
+                <li><a href="#">Gold Collection</a></li>
+                <li><a href="#">Silver Collection</a></li>
+                <li><a href="#">Wedding Bands</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item mega-menu-item">
+          <a href="#">Fashion <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+          <div class="mega-menu">
+            <div class="mega-menu-col">
+              <h4>Clothing</h4>
+              <ul>
+                <li><a href="#" data-category="Fashion">Men's Fashion</a></li>
+                <li><a href="#" data-category="Fashion">Women's Fashion</a></li>
+                <li><a href="#" data-category="Fashion">Kids</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item mega-menu-item">
+          <a href="#">Shoes <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+          <div class="mega-menu">
+            <div class="mega-menu-col">
+              <h4>Footwear</h4>
+              <ul>
+                <li><a href="#" data-category="Shoes">Sneakers</a></li>
+                <li><a href="#" data-category="Shoes">Boots</a></li>
+                <li><a href="#" data-category="Shoes">Sandals</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item"><a href="products.html">All Products</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Slider -->
+  <section class="hero-slider">
+    <div class="slides-wrapper" id="slidesWrapper">
+      <div class="slide active" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80');">
+        <h1>ESSIE FASHIONS</h1>
+        <p>Discover Amazing deals! Today</p>
+        <a href="products.html" class="btn">View all products →</a>
+      </div>
+      <div class="slide" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=2340&q=80');">
+        <h1>NEW ARRIVALS</h1>
+        <p>Check out the latest fashion trends</p>
+        <a href="products.html" class="btn">Shop Now →</a>
+      </div>
+      <div class="slide" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=2340&q=80');">
+        <h1>FLASH SALES</h1>
+        <p>Up to 70% OFF on Selected Items!</p>
+        <a href="products.html" class="btn">Grab Deals →</a>
+        
+      </div>
+    </div>
+    <button class="slider-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+    <button class="slider-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    <div class="dots" id="dotsContainer"></div>
+  </section>
+<style>
+  /* Top Announcement Marquee */
+  .top-bar {
+    background: #f14c3a;
+    color: white;
+    padding: 10px 0;
+    overflow: hidden; 
+    display: flex;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .top-bar-track {
+    display: flex;
+    flex-shrink: 0;
+    animation: slideRightToLeft 30s linear infinite; /* 30s duration, loops forever */
+  }
+
+  .top-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding-right: 60px; /* Creates space before the text repeats */
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .top-bar-link {
+    color: #fff;
+    font-weight: 800;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .top-bar-link:hover {
+    color: #ffebea;
+  }
+
+  @keyframes slideRightToLeft {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); } /* Moves exactly halfway to seamlessly loop */
+  }
+
+  /* Pause animation on hover */
+  .top-bar:hover .top-bar-track {
+    animation-play-state: paused;
+  }
+</style>
+
+<!-- Sliding Top Announcement Bar -->
+<div class="top-bar">
+  <div class="top-bar-track">
+    <!-- Duplicate 1 (Required for seamless loop) -->
+    <div class="top-bar-item">
+      <span>Super Deals • cheap Delivery from Sh50,000 • Up to 70% OFF on Selected Items!</span>
+      <!-- ⬇️ CHANGE THE href BELOW TO YOUR ACTUAL WEBSITE LINK ⬇️ -->
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+    </div>
+
+    <!-- Duplicate 2 (Required for seamless loop) -->
+    <div class="top-bar-item">
+      <span>VISIT SMMARIA PANEL TO BOOST SOCIAL MEDIA PLATFORM AT LOW COSTS</span>
+      <a href="https://smmaria.site" target="_blank" class="top-bar-link">⚡ Visit SMMARIA PANEL ⚡</a>
+    </div>
+  </div>
+</div>
+  <!-- Trust Bar -->
+  <div class="trust-bar container">
+    <div class="trust-item"><i class="fas fa-truck"></i> <div><h4>Free Delivery</h4><p>On orders over Sh50,000</p></div></div>
+    <div class="trust-item"><i class="fas fa-lock"></i> <div><h4>Secure Payments</h4><p>100% protected</p></div></div>
+    <div class="trust-item"><i class="fas fa-undo"></i> <div><h4>Easy Returns</h4><p>Within 7 days</p></div></div>
+    <div class="trust-item"><i class="fas fa-headset"></i> <div><h4>24/7 Support</h4><p>Always here to help</p></div></div>
+  </div>
+  
+  <!-- Featured Brands -->
+  <div class="container">
+    <h2 class="section-title">Featured Brands</h2>
+    <div class="brands-grid">
+      
+      <div class="brand-logo">
+        <img src="assets/nike.jpeg" alt="Nike" style="width: 100%; height: 50px; object-fit: contain;">
+      </div>
+      
+      <div class="brand-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/1920px-Adidas_Logo.svg.png" alt="Adidas" style="width: 100%; height: 50px; object-fit: contain;">
+      </div>
+      
+      <div class="brand-logo">
+        <img src="assets/rolex.jpeg" alt="Rolex" style="width: 100%; height: 50px; object-fit: contain;">
+      </div>
+      
+      <div class="brand-logo">
+        <img src="assets/puma.jpeg" alt="Puma" style="width: 100%; height: 50px; object-fit: contain;">
+      </div>
+      
+      <div class="brand-logo">
+        <img src="assets/jordan.jpeg" alt="Jordan" style="width: 100%; height: 50px; object-fit: contain;">
+      </div>
+      
+     
+      
+    </div>
+  </div>
+  <div class="container">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+      <a href="index.html">Home</a> <span>></span> <span>All Categories</span>
+    </nav>
+
+    <!-- Categories -->
+    <h2 class="section-title">Popular Categories <a href="products.html" class="view-all">View All →</a></h2>
+    <div class="categories-grid">
+      <div class="category-card" data-category="Perfume"><img src="assets/perfum.jpeg" alt="Perfume"><p>Perfumes</p></div>
+      <div class="category-card" data-category="Fashion"><img src="https://images.unsplash.com/photo-1551489186-cf8726f514f8?w=300" alt="Fashion"><p>Fashion</p></div>
+      <div class="category-card" data-category="Laptops"><img src="assets/jersey.jpeg" alt="Laptop"><p>Jersey</p></div>
+      <div class="category-card" data-category="Makeup"><img src="https://i.ibb.co/CshWbVF9/images-8.webp" alt="Beauty"><p>Makeup</p></div>
+      <div class="category-card" data-category="Home & Office"><img src="assets/sportshoes.jpeg" alt="Home"><p>Sports shoes</p></div>
+      <div class="category-card" data-category="Necklaces"><img src="https://i.ibb.co/Z1TrXMd4/download-2.webp" alt="Necklace"><p>Necklaces</p></div>
+      <div class="category-card" data-category="Watches"><img src="https://i.ibb.co/jkgQpDQn/images-6.webp" alt="Watches"><p>Watches</p></div>
+      <div class="category-card" data-category="Shoes"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Shoes"><p>Shoes</p></div>
+      <div class="category-card" data-category="Bags"><img src="https://i.ibb.co/Fbhh0FWQ/images-3.webp" alt="Bags"><p>Bags</p></div>
+    </div>
+
+    <!-- CATEGORY MODAL -->
+    <div id="categoryModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <div id="modalItems" class="modal-grid"></div>
+      </div>
+    </div>
+
+   <style>
+  .promo-banner-dynamic {
+    position: relative;
+    background: linear-gradient(90deg, #f14c3a, #ff6246);
+    margin: 40px 0;
+    padding: 60px 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  /* Background Image Layer */
+  .promo-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; /* Smooth fade effect */
+    z-index: 1;
+  }
+
+  /* Content Layer (Title & Buttons) */
+  .promo-content-dynamic {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    transition: opacity 0.5s ease; /* Fades out when text displays */
+  }
+
+  .promo-content-dynamic h2 {
+    color: white;
+    font-size: 2.2rem;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  /* Fullscreen Text Layer (Essie Fashions) */
+  .promo-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    z-index: 3;
+    opacity: 0;
+    pointer-events: none; /* Allows clicks to pass through if needed */
+    transition: opacity 1s ease-in-out;
+  }
+
+  .promo-buttons-dynamic {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* New Outline Button for Visit Website */
+  .btn-outline-white {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-outline-white:hover {
+    background: white;
+    color: #f14c3a;
+  }
+</style>
+
+<!-- Dynamic Promo Banner -->
+<div class="promo-banner-dynamic">
+  <!-- Background Image Layer (Changes every 20s) -->
+  <div class="promo-bg-img" id="promoBgImg"></div>
+  
+  <!-- Text Overlay (Displays every 30s) -->
+  <div class="promo-text-overlay" id="promoTextOverlay">Essie Fashions</div>
+  
+  <!-- Main Content -->
+  <div class="promo-content-dynamic" id="promoContent">
+    <h2>SMMARIA PANEL</h2>
+    <div class="promo-buttons-dynamic">
+      <a href="products.html" class="btn">Shop Now</a>
+      <a href="https://smmaria.site" target="_blank" class="btn-outline-white">Visit Website</a>
+    </div>
+  </div>
+</div>
+
+<!-- Logic for Rotating Ads -->
+<script>
+  const promoAds = [
+    // Timeline:
+    // 0s - 20s: Image 1
+    // 20s - 30s: Image 2
+    // 30s - 40s: Text "Essie Fashions"
+    // 40s - 60s: Image 3 (Loops back to start)
+    
+    { type: 'image', src: 'assets/ad2.jpg', duration: 20000 }, // ⬅️ Replace with your image paths
+    { type: 'image', src: 'assets/ad2.jpg', duration: 10000 }, // ⬅️ Replace with your image paths
+    { type: 'text',  text: 'Essie Fashions', duration: 10000 },
+    { type: 'image', src: 'assets/ad2.jpg', duration: 20000 }  // ⬅️ Replace with your image paths
+  ];
+
+  let promoIndex = 0;
+  const bgImgEl = document.getElementById('promoBgImg');
+  const textOverlayEl = document.getElementById('promoTextOverlay');
+  const contentEl = document.getElementById('promoContent');
+
+  function cyclePromoAds() {
+    const ad = promoAds[promoIndex];
+
+    if (ad.type === 'image') {
+      // Show the image
+      bgImgEl.style.backgroundImage = `url('${ad.src}')`;
+      bgImgEl.style.opacity = '1';
+      
+      // Hide the text overlay
+      textOverlayEl.style.opacity = '0';
+      
+      // Show the title and buttons
+      contentEl.style.opacity = '1';
+      
+    } else if (ad.type === 'text') {
+      // Hide the image to reveal the gradient background
+      bgImgEl.style.opacity = '0';
+      
+      // Show the "Essie Fashions" text
+      textOverlayEl.innerText = ad.text;
+      textOverlayEl.style.opacity = '1';
+      
+      // Hide the title and buttons so the text is the main focus
+      contentEl.style.opacity = '0';
+    }
+
+    // Move to the next ad
+    promoIndex = (promoIndex + 1) % promoAds.length;
+    setTimeout(cyclePromoAds, ad.duration);
+  }
+
+  // Start the cycle immediately on page load
+  cyclePromoAds();
+</script>
+
+    <!-- Flash Sales with Countdown -->
+    <div class="section-header">
+      <h2 class="section-title" id="flash">Flash Sales • Limited Time</h2>
+      <div class="countdown-timer">
+        <span>Ends In:</span>
+        <div id="timer"><span id="hours">02</span>:<span id="minutes">18</span>:<span id="seconds">34</span></div>
+      </div>
+    </div>
+    <section class="flash-section">
+      <div id="flashContainer" class="flash-grid"></div>
+    </section>
+
+    <!-- Trending Products -->
+    <h2 class="section-title">🔥 Trending Today <a href="products.html" class="view-all">View All →</a></h2>
+    <div class="products-grid" id="trendingGrid"></div>
+
+    <!-- Best Sellers -->
+    <h2 class="section-title">🏆 Best Sellers <a href="products.html" class="view-all">View All →</a></h2>
+    <div class="products-grid" id="bestSellersGrid"></div>
+
+    <!-- New Arrivals -->
+    <h2 class="section-title">✨ New Arrivals <a href="products.html" class="view-all">View All →</a></h2>
+    <div class="products-grid" id="newArrivalsGrid"></div>
+
+    <!-- Recommended Products -->
+    <h2 class="section-title">You May Also Like <a href="products.html" class="view-all">View All →</a></h2>
+    <div class="products-grid" id="recommendedGrid"></div>
+
+    <!-- All Products -->
+    <h2 class="section-title">All Products</h2>
+    <div class="products-grid" id="productsGrid">
+      <!-- Products loaded dynamically from Firebase -->
+    </div>
+  </div>
+
+  <!-- Store Statistics -->
+  <section class="stats-section">
+    <div class="stats-container">
+      <div class="stat-box"><h3>20,000+</h3><p>Happy Customers</p></div>
+      <div class="stat-box"><h3>15,000+</h3><p>Orders Delivered</p></div>
+      <div class="stat-box"><h3>500+</h3><p>Products</p></div>
+      <div class="stat-box"><h3>4.9★</h3><p>Average Rating</p></div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews -->
+  <div class="container">
+    <h2 class="section-title">Customer Reviews</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Excellent quality and fast delivery! Highly recommend."</p>
+        <h4>— Sarah K.</h4>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Amazing prices for genuine products. Will buy again."</p>
+        <h4>— James M.</h4>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Best online shopping experience in Uganda so far."</p>
+        <h4>— Emily W.</h4>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Newsletter Subscription -->
+  <section class="newsletter-section">
+    <h2>Get exclusive deals.</h2>
+    <p>Subscribe to our newsletter and be the first to know about new arrivals and promotions.</p>
+    <form class="newsletter-form">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- Footer with contact info -->
+  <footer>
+    <div class="footer-container">
+      <div>
+        <h3>Essie Jewelries</h3>
+        <p>Best online shopping destination in Africa</p>
+        <div class="social-proof">
+          <span>⭐ 4.9 Rating</span>
+          <span>8,500 Reviews</span>
+        </div>
+      </div>
+      <div>
+        <h3>Customer Service</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Returns & Refunds</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Shipping Info</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Make Money With Us</h3>
+        <ul>
+          <li><a href="#">Sell on Afribuy</a></li>
+          <li><a href="#">Affiliate Program</a></li>
+          <li><a href="#">Become a Vendor</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact Us</h3>
+        <p>Email: support@essiejewlries.com</p>
+        <p>Phone: +256 740 840693 </p>
+        <p>Address: 123 Entebbe Street, Kampala, Uganda </p>
+        <div class="payment-logos">
+          <i class="fab fa-cc-visa"></i>
+          <i class="fab fa-cc-mastercard"></i>
+          <i class="fas fa-mobile-alt"></i> <small>MTN</small>
+          <i class="fas fa-mobile-alt"></i> <small>Airtel</small>
+          <i class="fab fa-cc-paypal"></i>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:40px; padding-top:30px; border-top:1px solid #444;">
+      © 2026 essis jewelries - All Rights Reserved
+    </div>
+  </footer>
+
+<style>
+  /* Sliding Footer Animation */
+  @keyframes slideLeftToRight {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+  }
+
+  .ad-footer {
+    background: #ffffff;
+    color: #111827;
+    padding: 20px 0;
+    overflow: hidden; /* Hides the scrollbar */
+    border-top: 1px solid #ECECEC;
+    display: flex;
+    white-space: nowrap; /* Prevents items from wrapping */
+  }
+
+  .ad-footer-track {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    animation: slideLeftToRight 20s linear infinite; /* 20s duration, loops forever */
+    width: max-content; /* Ensures the track stretches to fit content */
+    padding-left: 20px;
+  }
+
+  .ad-footer-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #111827;
+    cursor: pointer; /* Lets users know it's clickable */
+    transition: opacity 0.3s ease;
+  }
+
+  .ad-footer-item:hover {
+    opacity: 0.8;
+  }
+
+  /* Replace this URL with your actual SMMARIA PANEL logo URL */
+  .ad-footer-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3b82f6;
+  }
+
+  .ad-footer-text {
+    padding: 6px 15px;
+    background: #3b82f6;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .ad-footer-label {
+    font-weight: 600;
+    color: #666;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Pause animation on hover */
+  .ad-footer:hover .ad-footer-track {
+    animation-play-state: paused;
+  }
+</style>
+
+<!-- Sliding Advertisement Footer -->
+<footer class="ad-footer">
+  <div class="ad-footer-track">
+    <!-- Duplicate 1 -->
+    <span class="ad-footer-label">Supported by</span>
+    <!-- ⬇️ CHANGE THE href BELOW TO YOUR ACTIAL WEBSITE LINK ⬇️ -->
+    <a href="https://smmaria.site" target="_blank" class="ad-footer-item">
+      <img src="assets/smm.jpeg" alt="SMMARIA PANEL Logo" class="ad-footer-logo">
+      <span class="ad-footer-text">SMMARIA PANEL</span>
+    </a>
+
+    <!-- Duplicate 2 (Required for seamless infinite loop) -->
+    <span class="ad-footer-label">Powered by</span>
+    <a href="https://smmaria.site" target="_blank" class="ad-footer-item">
+      <img src="assets/smm.jpeg" alt="SMMARIA PANEL Logo" class="ad-footer-logo">
+      <span class="ad-footer-text">SMMARIA PANEL</span>
+    </a>
+
+    <!-- Duplicate 3 (Required for seamless infinite loop) -->
+    <span class="ad-footer-label">Supported by</span>
+    <a href="https://smmaria.site" target="_blank" class="ad-footer-item">
+      <img src="assets/smm.jpeg" alt="SMMARIA PANEL Logo" class="ad-footer-logo">
+      <span class="ad-footer-text">SMMARIA PANEL</span>
+    </a>
+  </div>
+</footer>
+
+
+  <!-- Floating Buttons -->
+  <a href="https://wa.me/256740840693" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- ================== MAINTENANCE MODE ================== -->
+  <div id="maintenanceOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:url('https://i.ibb.co/KcQjtHr9/retouch-2025061916564417.webp') no-repeat center center/cover; z-index:9999; justify-content:center; align-items:center; text-align:center; color:#fff; flex-direction:column;">
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);"></div>
+    <div style="position:relative; z-index:10; padding:30px 20px;">
+      <h1 style="font-size:3rem;margin-bottom:20px;">⚠️ Site Under Maintenance</h1>
+      <p style="font-size:1.2rem;">We are currently performing maintenance. Please check back later.</p>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
