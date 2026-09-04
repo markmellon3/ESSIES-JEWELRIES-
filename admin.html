@@ -2,941 +2,829 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ESSIES-JEWELRIES Admin - Manage Products</title>
-   <!-- Favicon -->
-<link rel="icon" type="image/png" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
-<link rel="shortcut icon" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" />
-<link rel="manifest" href="/site.webmanifest" />
+  <link rel="icon" type="image/png" href="https://i.ibb.co/4gDndwPB/Flyerwiz-1769399915095.webp" sizes="96x96" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --primary: #f14c3a;
+      --primary-dark: #d83a2a;
+      --success: #25D366;
+      --danger: #e74c3c;
+      --bg: #f4f6f9;
+      --card-bg: #ffffff;
+      --text: #333;
+      --text-muted: #777;
+      --border: #eee;
     }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f9f9f9;
-      color: #333;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 50px;
     }
     header {
-      background: #f14c3a;
+      background: var(--primary);
       color: white;
       padding: 20px;
       text-align: center;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      position: relative;
     }
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 20px;
+    .logout-btn {
+      position: absolute;
+      right: 20px;
+      background: rgba(0,0,0,0.2);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
     }
-    .form-section {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+
+    /* Dashboard Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
       margin-bottom: 40px;
     }
-    h2 {
+    .stat-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stat-card i { font-size: 2.5rem; color: var(--primary); }
+    .stat-info h3 { font-size: 1.8rem; margin-bottom: 5px; }
+    .stat-info p { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; }
+
+    .card {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+    .card h2 {
       margin-bottom: 20px;
-      color: #f14c3a;
+      color: var(--primary);
+      font-size: 1.3rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
     }
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
     }
     input, textarea, select {
       width: 100%;
       padding: 12px;
       border: 1px solid #ddd;
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      font-family: inherit;
     }
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
+    textarea { min-height: 80px; resize: vertical; }
+    label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; display: block; }
+    
+    .btn-group { display: flex; gap: 10px; margin-top: 10px; }
     button {
-      background: #f14c3a;
+      background: var(--primary);
       color: white;
       border: none;
-      padding: 14px 24px;
+      padding: 12px 20px;
       border-radius: 6px;
-      font-size: 1.1rem;
+      font-size: 1rem;
       cursor: pointer;
-      margin-top: 20px;
+      font-weight: 600;
+      transition: 0.2s;
     }
-    button:hover {
-      background: #d83a2a;
+    button:hover { background: var(--primary-dark); }
+    button.btn-success { background: var(--success); }
+    button.btn-success:hover { background: #1ebe5d; }
+    button.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    
+    .img-preview-container { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .img-preview-container img { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; }
+
+    /* Table */
+    .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .search-box { padding: 10px; width: 300px; border: 1px solid #ddd; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    th { background: #fafafa; color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; }
+    tr:hover { background: #fdfdfd; }
+    .table-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+    .action-btn { padding: 6px 10px; border-radius: 4px; border: none; cursor: pointer; color: white; font-size: 0.8rem; margin-right: 5px; }
+    .edit-btn { background: #3498db; }
+    .delete-btn { background: var(--danger); }
+    .status { padding: 10px; text-align: center; font-weight: bold; margin-bottom: 15px; border-radius: 6px; display: none; }
+    .success { background: #e8f5e9; color: #2e7d32; display: block; }
+    .error { background: #ffebee; color: #c62828; display: block; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      display: none; justify-content: center; align-items: center; z-index: 9999;
     }
-    .products-table {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .modal-content {
+      background: white; padding: 30px; border-radius: 12px;
+      width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 14px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-    th {
-      background: #f14c3a;
-      color: white;
-    }
-    tr:hover {
-      background: #fff5f3;
-    }
-    .delete-btn {
-      background: #e74c3c;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .delete-btn:hover {
-      background: #c0392b;
-    }
-    .img-preview {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-      border-radius: 4px;
-    }
-    .status {
-      padding: 10px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .success { color: green; }
-    .error { color: red; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
   </style>
 </head>
 <body>
 
   <header>
     Essie <span style="color:#333;">Jewelrys</span> Admin Panel
+    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
   </header>
 
   <div class="container">
-<!-- ================== MAINTENANCE MODE ADMIN ================== -->
-<div id="maintenanceAdmin" style="
-    max-width:400px;
-    margin:40px auto;
-    padding:20px;
-    background:#fff;
-    border-radius:12px;
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
-    text-align:center;
-">
-  <h2 style="margin-bottom:20px;">⚙️ Maintenance Mode</h2>
-  <p id="maintenanceStatus" style="margin-bottom:15px;font-weight:700;">Loading status...</p>
-  <button id="toggleMaintenanceBtn" style="
-      padding:12px 20px;
-      border:none;
-      border-radius:8px;
-      background:#25D366;
-      color:#fff;
-      font-weight:700;
-      cursor:pointer;
-      font-size:1rem;
-  ">Toggle Maintenance</button>
-</div>
-
-<!-- ================== WEBSITE LIVE PREVIEW ================== -->
-<div class="card" id="livePreviewCard" style="margin-top:40px;">
-  <h2 style="margin-bottom:15px;">🌐 Website Live Preview</h2>
-  
-  <!-- Preview Iframe -->
-  <div style="position:relative;border:1px solid #ddd;border-radius:12px;overflow:hidden;">
-    <iframe id="websitePreview" src="index.html" 
-      style="width:100%;height:600px;border:none;"></iframe>
     
-    <!-- Refresh Button -->
-    <button id="refreshPreview" style="
-        position:absolute;
-        top:10px;
-        right:10px;
-        padding:8px 12px;
-        background:#25D366;
-        color:#fff;
-        font-weight:700;
-        border:none;
-        border-radius:6px;
-        cursor:pointer;
-        z-index:10;
-    ">Refresh</button>
-  </div>
-</div>
-<!-- IMAGE UPLOAD -->
-<div class="card">
-  <h2>📸 Image Upload (Public Link)</h2>
+    <!-- Dashboard Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3 id="statTotalProducts">0</h3>
+          <p>Total Products</p>
+        </div>
+        <i class="fas fa-boxes"></i>
+      </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3 id="statTotalStock">0</h3>
+          <p>Items Remaining</p>
+        </div>
+        <i class="fas fa-warehouse"></i>
+      </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3 id="statOutOfStock">0</h3>
+          <p>Out of Stock</p>
+        </div>
+        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+      </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3 id="statFlashSales">0</h3>
+          <p>Active Flash Sales</p>
+        </div>
+        <i class="fas fa-bolt" style="color: #f39c12;"></i>
+      </div>
+    </div>
 
-  <input 
-    type="file" 
-    id="imageFile" 
-    accept="image/*"
-    onchange="previewBeforeUpload()"
-  >
+    <div id="status" class="status"></div>
 
-  <img 
-    id="imagePreview"
-    style="
-      display:none;
-      width:100%;
-      max-height:240px;
-      object-fit:cover;
-      border-radius:12px;
-      margin:15px 0;
-    "
-  >
-<div id="imageLoader" class="image-loader"></div>
-  <button class="btn-primary" onclick="uploadImage()">Upload Image</button>
-
-  <input id="imageLink" readonly placeholder="Image URL">
-</div>
-<script>
-const IMGBB_KEY="47f7dff148164ff31a5947e6ee635363";
-async function uploadImage(){
-  const file=imageFile.files[0];
-  if(!file) return alert("Select image");
-  const fd=new FormData();
-  fd.append("image",file);
-  const r=await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,{method:"POST",body:fd});
-  const d=await r.json();
-  imageLink.value=d.data.url;
-}
-document.getElementById("imagePreview").style.display = "none";
-</script>
-<script>
-function refreshPreview(){
-  const iframe = document.getElementById("livePreview");
-  iframe.src = iframe.src;
-}
-</script>
-<script>
-function previewBeforeUpload(){
-  const file = document.getElementById("imageFile").files[0];
-  const preview = document.getElementById("imagePreview");
-  const loader = document.getElementById("imageLoader");
-
-  if(!file){
-    preview.style.display = "none";
-    loader.style.display = "none";
-    return;
-  }
-
-  loader.style.display = "block";
-  preview.style.display = "none";
-
-  const reader = new FileReader();
-  reader.onload = e => {
-    preview.src = e.target.result;
-    preview.style.display = "block";
-    loader.style.display = "none";
-  };
-  reader.readAsDataURL(file);
-}
-document.getElementById("imageLoader").style.display = "block";
-document.getElementById("imageLoader").style.display = "none";
-</script>
-    <!-- Add New Product Form -->
-    <div class="form-section">
-      <h2>Add New Product</h2>
-      <div id="status" class="status"></div>
+    <!-- Add Product Form -->
+    <div class="card">
+      <h2><i class="fas fa-plus-circle"></i> Add New Product</h2>
       <form id="addProductForm">
         <div class="form-grid">
-           <input type="text" id="shopName" placeholder="Shop Name" required>
-          <input type="text" id="productName" placeholder="Product Name" required>
-          <input type="number" id="price" placeholder="Current Price (sh)" required>
-          <input type="number" id="oldPrice" placeholder="Old Price (optional)">
-          <input type="number" id="discount" placeholder="Discount % (optional)">
-          <input type="text" id="image" placeholder="Image URL" required>
-          <input type="number" id="stock" placeholder="Stock Quantity" required>
-<input type="text" id="phone" placeholder="Phone Number" required>
-          <select id="category" required>
-            <option value="">Select Category</option>
-            <option>Perfume</option>
-            <option>Fashion</option>
-            <option>Laptops</option>
-            <option>Makeup</option>
-            <option>Home&Office</option>
-            <option>Necklaces</option>
-            <option>Watches</option>
-            <option>Shoes</option>
-            <option>Bags</option>
-          </select>
+          <div>
+            <label>Shop Name</label>
+            <input type="text" id="shopName" placeholder="e.g. Essie Official" required>
+          </div>
+          <div>
+            <label>Product Name</label>
+            <input type="text" id="productName" placeholder="e.g. Gold Necklace" required>
+          </div>
+          <div>
+            <label>Price (UGX)</label>
+            <input type="number" id="price" placeholder="e.g. 50000" required>
+          </div>
+          <div>
+            <label>Old Price (Optional)</label>
+            <input type="number" id="oldPrice" placeholder="e.g. 80000">
+          </div>
+          <div>
+            <label>Stock Quantity</label>
+            <input type="number" id="stock" placeholder="e.g. 15" required>
+          </div>
+          <div>
+            <label>Phone Number</label>
+            <input type="text" id="phone" placeholder="e.g. +256 740..." required>
+          </div>
+          <div>
+            <label>Category</label>
+            <select id="category" required>
+              <option value="">Select Category</option>
+              <option>Perfume</option>
+              <option>Fashion</option>
+              <option>Makeup</option>
+              <option>Necklaces</option>
+              <option>Watches</option>
+              <option>Shoes</option>
+              <option>Bags</option>
+            </select>
+          </div>
         </div>
-        <textarea id="description" placeholder="Product Description (optional)"></textarea>
-        <button type="submit">Add Product</button>
+        
+        <div style="margin-bottom: 15px;">
+          <label>Description</label>
+          <textarea id="description" placeholder="Product details..."></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+          <label>Product Images (Max 5)</label>
+          <input type="file" id="imageFile" accept="image/*" multiple>
+          <div class="img-preview-container" id="imagePreviewContainer"></div>
+          <div id="imageLoader" style="display:none; margin-top:10px; color:blue; font-weight:600;">Uploading images...</div>
+          <input type="hidden" id="imageUrls" required>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit"><i class="fas fa-save"></i> Save Product</button>
+          <button type="button" id="bulkAddBtn" class="btn-outline"><i class="fas fa-layer-group"></i> Save & Add Next (Bulk)</button>
+        </div>
       </form>
     </div>
-<!-- Live Preview -->
-<div id="preview" style="margin-top:20px; padding:15px; border:1px solid #ddd; border-radius:10px; background:#fff; display:flex; gap:15px; align-items:center;">
-  <img id="previewImage" src="https://via.placeholder.com/100" alt="Image" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
-  <div>
-    <h4 id="previewName">Product Name</h4>
-    <p id="previewPrice">Sh 0</p>
-    <p id="previewOldPrice">Old Price: -</p>
-    <p id="previewDiscount">Discount: -</p>
-    <p id="previewStock">Stock: 0</p>
-    <p id="previewPhone">Phone: N/A</p>
-    <p id="previewDescription">Description: -</p>
-  </div>
-</div>
+
     <!-- Products List -->
-    <div class="products-table">
-      <h2 style="padding: 20px; background: #f8f8f8;">All Products</h2>
-      <table id="productsTable">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Old Price</th>
-            <th>Discount</th>
-            <th>Stock</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Products will be loaded here -->
-        </tbody>
-      </table>
+    <div class="card">
+      <div class="table-header">
+        <h2 style="margin:0; border:none;"><i class="fas fa-list"></i> All Products</h2>
+        <input type="text" class="search-box" id="searchInput" placeholder="Search by name or shop...">
+      </div>
+      <div style="overflow-x: auto;">
+        <table id="productsTable">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock Left</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <tr><td colspan="6" style="text-align:center; padding:20px;">Loading products...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ================== FLASH SELLS ADMIN ================== -->
+    <div class="card">
+      <h2><i class="fas fa-bolt"></i> Manage Flash Sells</h2>
+      <form id="flashAddForm">
+        <div class="form-grid">
+          <input id="fName" placeholder="Flash Item Name" required>
+          <input id="fPrice" type="number" placeholder="Price (UGX)" required>
+          <input id="fOldPrice" type="number" placeholder="Old Price (Optional)">
+          <input id="fStock" type="number" placeholder="Stock" value="0" required>
+          <input id="fPhone" placeholder="Phone Number" required>
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label>Flash Item Image URL</label>
+          <input id="fImage" placeholder="https://..." required>
+        </div>
+        <button type="submit" class="btn-success"><i class="fas fa-plus"></i> Add Flash Sell</button>
+      </form>
+
+      <div style="overflow-x: auto; margin-top: 30px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="flashTableBody">
+            <tr><td colspan="5" style="text-align:center; padding:20px;">Loading flash sales...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ================== MAINTENANCE MODE ================== -->
+    <div class="card" style="text-align: center;">
+      <h2 style="border:none; margin-bottom: 10px;">⚙️ Website Maintenance Mode</h2>
+      <p id="maintenanceStatus" style="margin-bottom:15px;font-weight:700;font-size:1.1rem;">Loading status...</p>
+      <button id="toggleMaintenanceBtn">Toggle Maintenance</button>
     </div>
 
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+  <!-- ================== EDIT PRODUCT MODAL ================== -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 style="color: var(--primary); margin:0;">Edit Product</h2>
+        <button class="close-modal" onclick="document.getElementById('editModal').style.display='none'">&times;</button>
+      </div>
+      <form id="editForm">
+        <input type="hidden" id="editId">
+        <input type="hidden" id="editCategory">
+        <div class="form-grid">
+          <div>
+            <label>Product Name</label>
+            <input type="text" id="editProductName" required>
+          </div>
+          <div>
+            <label>Shop Name</label>
+            <input type="text" id="editShopName" required>
+          </div>
+          <div>
+            <label>Price (UGX)</label>
+            <input type="number" id="editPrice" required>
+          </div>
+          <div>
+            <label>Stock Quantity</label>
+            <input type="number" id="editStock" required>
+          </div>
+          <div>
+            <label>Phone Number</label>
+            <input type="text" id="editPhone" required>
+          </div>
+          <div>
+            <label>First Image URL</label>
+            <input type="text" id="editImage" required>
+          </div>
+        </div>
+        <button type="submit"><i class="fas fa-save"></i> Update Product</button>
+      </form>
+    </div>
+  </div>
 
+  <!-- ================== ADMIN LOGIN MODAL ================== -->
+  <div id="adminLoginModal" style="position:fixed; inset:0; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:9999;">
+    <div style="background:#fff; padding:30px; border-radius:12px; width:100%; max-width:400px; text-align:center; box-shadow:0 6px 18px rgba(0,0,0,.25);">
+      <h2 style="margin-bottom:25px;font-weight:700;font-size:1.6rem;color:#111;">Admin Login</h2>
+      <input type="email" id="adminEmail" placeholder="Email" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
+      <input type="password" id="adminPassword" placeholder="Password" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
+      <button id="loginBtn" style="width:100%; padding:12px; border:none; border-radius:8px; background:#25D366; color:#fff; font-size:1rem; font-weight:700; cursor:pointer;">Login</button>
+      <p id="loginError" style="color:red;text-align:center;margin-top:12px;display:none;"></p>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       UNIFIED FIREBASE & ADMIN LOGIC SCRIPT
+       ========================================== -->
   <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { 
-  getDatabase, 
-  ref, 
-  push, 
-  onValue, 
-  remove, 
-  update 
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-/* =====================
-   FIREBASE INIT
-===================== */
-const firebaseConfig = {
-  apiKey: "AIzaSyCI1yBIgDhl7cnKjCzOaWt4vK2Q-DcQrac",
-  authDomain: "essie-db2aa.firebaseapp.com",
-  databaseURL: "https://essie-db2aa-default-rtdb.firebaseio.com",
-  projectId: "essie-db2aa",
-  storageBucket: "essie-db2aa.appspot.com",
-  messagingSenderId: "210132046846",
-  appId: "1:210132046846:web:5fac8fedce997553cda6af",
-  measurementId: "G-V5GJD82P61"  // Optional for Firebase JS SDK v7.20.0 and later
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyCI1yBIgDhl7cnKjCzOaWt4vK2Q-DcQrac",
+      authDomain: "essie-db2aa.firebaseapp.com",
+      databaseURL: "https://essie-db2aa-default-rtdb.firebaseio.com",
+      projectId: "essie-db2aa",
+      storageBucket: "essie-db2aa.appspot.com",
+      messagingSenderId: "210132046846",
+      appId: "1:210132046846:web:5fac8fedce997553cda6af",
+      measurementId: "G-V5GJD82P61"
+    };
 
-/* =====================
-   DOM ELEMENTS
-===================== */
-const addForm = document.getElementById("addProductForm");
-const statusEl = document.getElementById("status");
-const tableBody = document.querySelector("#productsTable tbody");
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
 
-const shopNameEl = document.getElementById("shopName");
-const productNameEl = document.getElementById("productName");
-const priceEl = document.getElementById("price");
-const oldPriceEl = document.getElementById("oldPrice");
-const discountEl = document.getElementById("discount");
-const imageEl = document.getElementById("image");
-const stockEl = document.getElementById("stock");
-const phoneEl = document.getElementById("phone");
-const categorySelect = document.getElementById("category");
-const descriptionEl = document.getElementById("description");
+    // ==========================================
+    // AUTHENTICATION LOGIC
+    // ==========================================
+    const loginModal = document.getElementById("adminLoginModal");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginError = document.getElementById("loginError");
+    const logoutBtn = document.getElementById("logoutBtn");
 
-/* =====================
-   STATUS MESSAGE
-===================== */
-function showStatus(msg, error = false) {
-  statusEl.textContent = msg;
-  statusEl.className = "status " + (error ? "error" : "success");
-  setTimeout(() => statusEl.textContent = "", 4000);
-}
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        loginModal.style.display = "none";
+        initAdmin(); // Start loading admin data
+      } else {
+        loginModal.style.display = "flex";
+      }
+    });
 
-/* =====================
-   ADD PRODUCT
-===================== */
-addForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    loginBtn.addEventListener("click", async () => {
+      const email = document.getElementById("adminEmail").value.trim();
+      const password = document.getElementById("adminPassword").value;
+      if (!email || !password) return;
+      
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        loginError.textContent = "Invalid email or password.";
+        loginError.style.display = "block";
+      }
+    });
 
-  if (!categorySelect.value) {
-    return showStatus("Select a category", true);
-  }
+    logoutBtn.addEventListener("click", () => signOut(auth));
 
-  const product = {
-    shopName: shopNameEl.value.trim(),
-    productName: productNameEl.value.trim(),
-    name: `${productNameEl.value.trim()} — ${shopNameEl.value.trim()}`,
-    price: Number(priceEl.value),
-    oldPrice: oldPriceEl.value ? Number(oldPriceEl.value) : null,
-    discount: discountEl.value ? Number(discountEl.value) : null,
-    image: imageEl.value.trim(),
-    stock: Number(stockEl.value),
-    phone: phoneEl.value.trim(),
-    description: descriptionEl.value.trim() || "",
-    createdAt: Date.now()
-  };
-
-  try {
-    await push(ref(db, `catalogs/${categorySelect.value}`), product);
-    showStatus("Product added successfully");
-    addForm.reset();
-    updatePreview();
-  } catch (err) {
-    showStatus(err.message, true);
-  }
-});
-
-/* =====================
-   LOAD PRODUCTS
-===================== */
-function loadProducts() {
-  onValue(ref(db, "catalogs"), snapshot => {
-    tableBody.innerHTML = "";
-
-    if (!snapshot.exists()) {
-      tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center;">No products</td></tr>`;
-      return;
+    // ==========================================
+    // GLOBAL VARS & STATUS
+    // ==========================================
+    const statusEl = document.getElementById("status");
+    function showStatus(msg, isError = false) {
+      statusEl.textContent = msg;
+      statusEl.className = "status " + (isError ? "error" : "success");
+      setTimeout(() => statusEl.className = "status", 4000);
     }
 
-    snapshot.forEach(catSnap => {
-      const category = catSnap.key;
+    let allProducts = []; // Store for search
 
-      catSnap.forEach(itemSnap => {
-        const item = itemSnap.val();
-        const id = itemSnap.key;
+    // ==========================================
+    // IMAGE UPLOAD LOGIC (IMGBB)
+    // ==========================================
+    const IMGBB_KEY = "47f7dff148164ff31a5947e6ee635363";
+    const imageFileInput = document.getElementById("imageFile");
+    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+    const imageLoader = document.getElementById("imageLoader");
+    const imageUrlsInput = document.getElementById("imageUrls");
 
-        const price = item.price ? `UGX ${Number(item.price).toLocaleString("en-UG")}` : "UGX 0";
-        const oldPrice = item.oldPrice ? `UGX ${Number(item.oldPrice).toLocaleString("en-UG")}` : "-";
-        const discount = item.discount ? `${item.discount}%` : "-";
+    imageFileInput.addEventListener("change", async () => {
+      const files = imageFileInput.files;
+      if (!files.length) return;
+      
+      if (files.length > 5) {
+        showStatus("Max 5 images allowed.", true);
+        imageFileInput.value = "";
+        return;
+      }
 
-        tableBody.innerHTML += `
+      imageLoader.style.display = "block";
+      imagePreviewContainer.innerHTML = "";
+      const urls = [];
+
+      for (let file of files) {
+        const fd = new FormData();
+        fd.append("image", file);
+        
+        try {
+          const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: "POST", body: fd });
+          const data = await res.json();
+          if (data.data && data.data.url) {
+            urls.push(data.data.url);
+            const img = document.createElement("img");
+            img.src = data.data.url;
+            imagePreviewContainer.appendChild(img);
+          }
+        } catch (err) {
+          console.error("Upload error:", err);
+        }
+      }
+
+      imageLoader.style.display = "none";
+      imageUrlsInput.value = JSON.stringify(urls);
+      showStatus("Images uploaded successfully.");
+    });
+
+    // ==========================================
+    // ADD PRODUCT FORM LOGIC
+    // ==========================================
+    const addForm = document.getElementById("addProductForm");
+    
+    addForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const category = document.getElementById("category").value;
+      if (!category) return showStatus("Select a category", true);
+      
+      const imageJson = document.getElementById("imageUrls").value;
+      if (!imageJson) return showStatus("Please upload at least 1 image", true);
+
+      const productName = document.getElementById("productName").value.trim();
+      const shopName = document.getElementById("shopName").value.trim();
+
+      const product = {
+        shopName: shopName,
+        productName: productName,
+        name: `${productName} — ${shopName}`,
+        price: Number(document.getElementById("price").value),
+        oldPrice: document.getElementById("oldPrice").value ? Number(document.getElementById("oldPrice").value) : null,
+        stock: Number(document.getElementById("stock").value),
+        phone: document.getElementById("phone").value.trim(),
+        description: document.getElementById("description").value.trim() || "",
+        images: JSON.parse(imageJson),
+        image: JSON.parse(imageJson)[0] || "", // Fallback for frontend logic expecting single image
+        createdAt: Date.now()
+      };
+
+      try {
+        await push(ref(db, `catalogs/${category}`), product);
+        showStatus("Product added successfully!");
+        addForm.reset();
+        imagePreviewContainer.innerHTML = "";
+        document.getElementById("imageUrls").value = "";
+      } catch (err) {
+        showStatus(err.message, true);
+      }
+    });
+
+    // BULK ADD: Save but keep shop & category
+    document.getElementById("bulkAddBtn").addEventListener("click", async () => {
+      const category = document.getElementById("category").value;
+      if (!category) return showStatus("Select a category", true);
+      
+      const imageJson = document.getElementById("imageUrls").value;
+      if (!imageJson) return showStatus("Please upload at least 1 image", true);
+
+      const productName = document.getElementById("productName").value.trim();
+      const shopName = document.getElementById("shopName").value.trim();
+
+      const product = {
+        shopName: shopName,
+        productName: productName,
+        name: `${productName} — ${shopName}`,
+        price: Number(document.getElementById("price").value),
+        oldPrice: document.getElementById("oldPrice").value ? Number(document.getElementById("oldPrice").value) : null,
+        stock: Number(document.getElementById("stock").value),
+        phone: document.getElementById("phone").value.trim(),
+        description: document.getElementById("description").value.trim() || "",
+        images: JSON.parse(imageJson),
+        image: JSON.parse(imageJson)[0] || "",
+        createdAt: Date.now()
+      };
+
+      try {
+        await push(ref(db, `catalogs/${category}`), product);
+        showStatus("Bulk Item Saved! Add next product...");
+        
+        // Clear only specific fields
+        document.getElementById("productName").value = "";
+        document.getElementById("price").value = "";
+        document.getElementById("oldPrice").value = "";
+        document.getElementById("stock").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("imageFile").value = "";
+        document.getElementById("imageUrls").value = "";
+        imagePreviewContainer.innerHTML = "";
+      } catch (err) {
+        showStatus(err.message, true);
+      }
+    });
+
+    // ==========================================
+    // LOAD, DISPLAY & SEARCH PRODUCTS
+    // ==========================================
+    function initAdmin() {
+      // Load Catalogs
+      onValue(ref(db, "catalogs"), snapshot => {
+        allProducts = [];
+        let totalStock = 0;
+        let outOfStock = 0;
+
+        if (!snapshot.exists()) {
+          document.getElementById("productsTableBody").innerHTML = `<tr><td colspan="6" style="text-align:center;">No products yet</td></tr>`;
+          return;
+        }
+
+        snapshot.forEach(catSnap => {
+          const category = catSnap.key;
+          catSnap.forEach(itemSnap => {
+            const item = itemSnap.val();
+            const id = itemSnap.key;
+            
+            // Stats calc
+            if (item.stock > 0) totalStock += item.stock;
+            else outOfStock++;
+
+            allProducts.push({ id, category, ...item });
+          });
+        });
+
+        // SORT: Newest items appear on top based on timestamp
+        allProducts.sort((a, b) => b.createdAt - a.createdAt);
+
+        // Update Dashboard
+        document.getElementById("statTotalProducts").textContent = allProducts.length;
+        document.getElementById("statTotalStock").textContent = totalStock;
+        document.getElementById("statOutOfStock").textContent = outOfStock;
+
+        renderTable(allProducts);
+      });
+
+      // Load Flash Sells
+      loadFlashSells();
+      
+      // Load Maintenance Status
+      loadMaintenance();
+    }
+
+    function renderTable(items) {
+      const tbody = document.getElementById("productsTableBody");
+      tbody.innerHTML = "";
+      
+      if (items.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No products found</td></tr>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const stockColor = item.stock > 0 ? '#2e7d32' : '#c62828';
+        tbody.innerHTML += `
           <tr>
+            <td><img src="${item.image || item.images?.[0] || 'https://via.placeholder.com/50'}" class="table-img" onerror="this.src='https://via.placeholder.com/50'"></td>
+            <td><strong>${item.productName}</strong><br><small>${item.shopName}</small></td>
+            <td>${item.category}</td>
+            <td>UGX ${Number(item.price).toLocaleString()}</td>
+            <td style="color:${stockColor}; font-weight:700;">${item.stock}</td>
             <td>
-              <img src="${item.image}" class="img-preview" onerror="this.src='https://via.placeholder.com/60'">
-            </td>
-            <td>
-              <strong>${item.productName}</strong><br>
-              <small>${item.shopName}</small>
-            </td>
-            <td>${category}</td>
-            <td>${price}</td>
-            <td>${oldPrice}</td>
-            <td>${discount}</td>
-            <td>${item.stock}</td>
-            <td>${item.phone}</td>
-            <td>
-              <button onclick="editProduct('${category}','${id}')">✏ Edit</button>
-              <button class="delete-btn" onclick="deleteProduct('${category}','${id}')">🗑</button>
+              <button class="action-btn edit-btn" data-id="${item.id}" data-cat="${item.category}"><i class="fas fa-edit"></i></button>
+              <button class="action-btn delete-btn" data-id="${item.id}" data-cat="${item.category}"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
         `;
       });
+
+      // Attach Edit/Delete listeners (FIXED: Using e.currentTarget instead of e.target)
+      document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', (e) => {
+        const button = e.currentTarget;
+        openEditModal(button.dataset.id, button.dataset.cat);
+      }));
+      
+      document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', (e) => {
+        const button = e.currentTarget;
+        deleteProduct(button.dataset.id, button.dataset.cat);
+      }));
+    }
+
+    // Search Logic
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      const term = e.target.value.toLowerCase();
+      const filtered = allProducts.filter(item => 
+        item.productName?.toLowerCase().includes(term) || 
+        item.shopName?.toLowerCase().includes(term)
+      );
+      renderTable(filtered);
     });
-  });
-}
 
-/* =====================
-   DELETE PRODUCT
-===================== */
-window.deleteProduct = async (category, id) => {
-  if (!confirm("Delete this product?")) return;
+    // ==========================================
+    // EDIT PRODUCT MODAL LOGIC
+    // ==========================================
+    const editModal = document.getElementById("editModal");
+    const editForm = document.getElementById("editForm");
 
-  try {
-    await remove(ref(db, `catalogs/${category}/${id}`));
-    showStatus("Product deleted");
-  } catch (err) {
-    showStatus(err.message, true);
-  }
-};
+    async function openEditModal(id, category) {
+      const snap = await get(ref(db, `catalogs/${category}/${id}`));
+      const item = snap.val();
+      
+      document.getElementById("editId").value = id;
+      document.getElementById("editCategory").value = category;
+      document.getElementById("editProductName").value = item.productName || "";
+      document.getElementById("editShopName").value = item.shopName || "";
+      document.getElementById("editPrice").value = item.price || 0;
+      document.getElementById("editStock").value = item.stock || 0;
+      document.getElementById("editPhone").value = item.phone || "";
+      document.getElementById("editImage").value = item.image || (item.images && item.images[0]) || "";
+      
+      editModal.style.display = "flex";
+    }
 
-/* =====================
-   EDIT PRODUCT
-===================== */
-window.editProduct = async (category, id) => {
-  const productName = prompt("Product name:");
-  const shopName = prompt("Shop name:");
-  const price = prompt("Price:");
-  const image = prompt("Image URL:");
-  const stock = prompt("Stock quantity:");
-  const phone = prompt("Phone number:");
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("editId").value;
+      const category = document.getElementById("editCategory").value;
+      const productName = document.getElementById("editProductName").value.trim();
+      const shopName = document.getElementById("editShopName").value.trim();
+      const imgUrl = document.getElementById("editImage").value.trim();
 
-  if (!productName || !shopName || !price || !image || !stock || !phone) return;
+      const updatedData = {
+        productName: productName,
+        shopName: shopName,
+        name: `${productName} — ${shopName}`,
+        price: Number(document.getElementById("editPrice").value),
+        stock: Number(document.getElementById("editStock").value),
+        phone: document.getElementById("editPhone").value.trim(),
+        image: imgUrl,
+        images: [imgUrl] // Update array with single edited URL for simplicity
+      };
 
-  try {
-    await update(ref(db, `catalogs/${category}/${id}`), {
-      productName,
-      shopName,
-      name: `${productName} — ${shopName}`,
-      price: Number(price),
-      image,
-      stock: Number(stock),
-      phone
+      try {
+        await update(ref(db, `catalogs/${category}/${id}`), updatedData);
+        showStatus("Product updated successfully!");
+        editModal.style.display = "none";
+      } catch (err) {
+        showStatus(err.message, true);
+      }
     });
-    showStatus("Product updated");
-  } catch (err) {
-    showStatus(err.message, true);
-  }
-};
 
-/* =====================
-   LIVE PREVIEW
-===================== */
-const previewImage = document.getElementById("previewImage");
-const previewName = document.getElementById("previewName");
-const previewPrice = document.getElementById("previewPrice");
-const previewOldPrice = document.getElementById("previewOldPrice");
-const previewDiscount = document.getElementById("previewDiscount");
-const previewStock = document.getElementById("previewStock");
-const previewPhone = document.getElementById("previewPhone");
-const previewDescription = document.getElementById("previewDescription");
-
-function updatePreview() {
-  previewImage.src = imageEl.value || "https://via.placeholder.com/100";
-  previewName.textContent =
-    productNameEl.value && shopNameEl.value
-      ? `${productNameEl.value} — ${shopNameEl.value}`
-      : "Product Name — Shop Name";
-  previewPrice.textContent = priceEl.value ? `UGX ${Number(priceEl.value).toLocaleString("en-UG")}` : "UGX 0";
-  previewOldPrice.textContent = oldPriceEl.value ? `Old Price: UGX ${Number(oldPriceEl.value).toLocaleString("en-UG")}` : "Old Price: -";
-  previewDiscount.textContent = discountEl.value ? `Discount: ${discountEl.value}%` : "Discount: -";
-  previewStock.textContent = stockEl.value ? `Stock: ${stockEl.value}` : "Stock: 0";
-  previewPhone.textContent = phoneEl.value ? `Phone: ${phoneEl.value}` : "Phone: N/A";
-  previewDescription.textContent = descriptionEl.value ? `Description: ${descriptionEl.value}` : "Description: -";
-}
-
-/* =====================
-   PREVIEW LISTENERS
-===================== */
-[
-  shopNameEl,
-  productNameEl,
-  priceEl,
-  oldPriceEl,
-  discountEl,
-  imageEl,
-  stockEl,
-  phoneEl,
-  descriptionEl
-].forEach(el => el.addEventListener("input", updatePreview));
-
-/* =====================
-   START
-===================== */
-loadProducts();
-updatePreview();
-</script>
-<!-- ================== FLASH SELLS ADMIN MODULE ================== -->
-<div id="flashSellsAdmin" style="margin-top:40px;">
-  <style>
-    /* Scoped styles */
-    #flashSellsAdmin .card {
-      background:#fff;
-      padding:20px;
-      border-radius:12px;
-      box-shadow:0 6px 18px rgba(0,0,0,.08);
-      margin-bottom:30px;
+    // ==========================================
+    // DELETE PRODUCT LOGIC
+    // ==========================================
+    async function deleteProduct(id, category) {
+      if (!confirm("Are you sure you want to delete this product?")) return;
+      try {
+        await remove(ref(db, `catalogs/${category}/${id}`));
+        showStatus("Product deleted.");
+      } catch (err) {
+        showStatus(err.message, true);
+      }
     }
-    #flashSellsAdmin .form-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:12px;
+
+    // ==========================================
+    // FLASH SALES LOGIC
+    // ==========================================
+    function loadFlashSells() {
+      const flashForm = document.getElementById("flashAddForm");
+      const flashTableBody = document.getElementById("flashTableBody");
+      const flashRef = ref(db, "flashSells");
+
+      flashForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {
+          name: document.getElementById("fName").value.trim(),
+          price: Number(document.getElementById("fPrice").value),
+          oldPrice: document.getElementById("fOldPrice").value ? Number(document.getElementById("fOldPrice").value) : null,
+          stock: Number(document.getElementById("fStock").value),
+          phone: document.getElementById("fPhone").value.trim(),
+          image: document.getElementById("fImage").value.trim(),
+          createdAt: Date.now()
+        };
+        await push(flashRef, data);
+        flashForm.reset();
+      });
+
+      onValue(flashRef, snap => {
+        flashTableBody.innerHTML = "";
+        let flashCount = 0;
+        let flashArray = [];
+        
+        if (!snap.exists()) {
+          flashTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No flash sales yet</td></tr>`;
+        } else {
+          snap.forEach(child => {
+            const item = child.val();
+            const id = child.key;
+            flashArray.push({ id, ...item });
+          });
+
+          // SORT: Newest flash items on top
+          flashArray.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+          flashArray.forEach(item => {
+            flashCount++;
+            flashTableBody.innerHTML += `
+              <tr>
+                <td><img src="${item.image}" class="table-img" onerror="this.src='https://via.placeholder.com/50'"></td>
+                <td>${item.name}</td>
+                <td>UGX ${item.price.toLocaleString()}</td>
+                <td>${item.stock}</td>
+                <td><button class="action-btn delete-btn" data-id="${item.id}"><i class="fas fa-trash"></i></button></td>
+              </tr>
+            `;
+          });
+        }
+
+        document.getElementById("statFlashSales").textContent = flashCount;
+
+        // Attach delete listeners for flash items (FIXED: Using e.currentTarget)
+        document.querySelectorAll('#flashTableBody .delete-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const button = e.currentTarget;
+            const id = button.dataset.id;
+            if (confirm("Delete this flash sale item?")) {
+              await remove(ref(db, `flashSells/${id}`));
+            }
+          });
+        });
+      });
     }
-    #flashSellsAdmin input, #flashSellsAdmin textarea {
-      padding:12px;
-      border:1px solid #ddd;
-      border-radius:6px;
-      font-size:.95rem;
-      width:100%;
+
+    // ==========================================
+    // MAINTENANCE MODE LOGIC
+    // ==========================================
+    function loadMaintenance() {
+      const statusText = document.getElementById("maintenanceStatus");
+      const toggleBtn = document.getElementById("toggleMaintenanceBtn");
+      const maintenanceRef = ref(db, "maintenance");
+
+      onValue(maintenanceRef, snapshot => {
+        const isOn = snapshot.exists() ? snapshot.val() : false;
+        statusText.textContent = isOn ? "Maintenance Mode: ON" : "Maintenance Mode: OFF";
+        toggleBtn.style.background = isOn ? "#e74c3c" : "#25D366";
+        toggleBtn.textContent = isOn ? "Turn OFF" : "Turn ON";
+      });
+
+      toggleBtn.addEventListener("click", async () => {
+        const snap = await get(maintenanceRef);
+        const currentStatus = snap.exists() ? snap.val() : false;
+        await update(maintenanceRef, !currentStatus);
+      });
     }
-    #flashSellsAdmin textarea { resize:none; }
-    #flashSellsAdmin button {
-      margin-top:12px;
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      background:#25D366;
-      color:#fff;
-      font-size:1rem;
-      font-weight:700;
-      cursor:pointer;
-    }
-    #flashSellsAdmin table {
-      width:100%;
-      border-collapse:collapse;
-    }
-    #flashSellsAdmin th, #flashSellsAdmin td {
-      padding:12px;
-      border-bottom:1px solid #eee;
-      text-align:left;
-    }
-    #flashSellsAdmin th {
-      background:#111;
-      color:#fff;
-    }
-    #flashSellsAdmin img {
-      width:60px;
-      height:60px;
-      object-fit:cover;
-      border-radius:6px;
-    }
-    #flashSellsAdmin .delete {
-      background:#e74c3c;
-      padding:6px 10px;
-      border-radius:6px;
-      color:#fff;
-      border:none;
-      cursor:pointer;
-    }
-    /* Live preview card */
-    #flashSellsAdmin #previewCard {
-      max-width:320px;
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:0 10px 25px rgba(0,0,0,.12);
-    }
-    #flashSellsAdmin #previewCard img {
-      width:100%;
-      height:220px;
-      object-fit:cover;
-    }
-  </style>
-
-  <!-- Add Product Form -->
-  <div class="card">
-    <h2>Add Flash Sell Product</h2>
-    <form id="flashAddForm">
-      <div class="form-grid">
-        <input id="fName" placeholder="Product Name" required>
-        <input id="fPrice" type="number" placeholder="Price (UGX)" required>
-        <input id="fOldPrice" type="number" placeholder="Old Price (optional)">
-        <input id="fDiscount" type="number" placeholder="Discount % (optional)">
-        <input id="fStock" type="number" placeholder="Stock" value="0">
-        <input id="fPhone" placeholder="Contact Phone">
-        <input id="fImage" placeholder="Image URL" required>
-      </div>
-      <textarea id="fDescription" placeholder="Description (optional)"></textarea>
-      <button type="submit">Add Product</button>
-    </form>
-  </div>
-
-  <!-- Live Preview -->
-  <div class="card">
-    <h2>Live Preview</h2>
-    <div id="previewCard">
-      <img id="pImage" src="https://via.placeholder.com/320x220">
-      <div style="padding:15px;">
-        <h3 id="pName">Product Name</h3>
-        <p id="pPrice" style="font-weight:700;color:#25D366">UGX 0</p>
-        <p id="pOldPrice" style="text-decoration:line-through;color:#999;display:none"></p>
-        <p id="pDiscount" style="color:#e67e22;display:none"></p>
-        <p id="pStock" style="font-size:.9rem;color:#555">Stock: 0</p>
-        <p id="pPhone" style="font-size:.9rem;color:#555">Phone: N/A</p>
-        <p id="pDescription" style="font-size:.85rem;color:#666;margin-top:8px;display:none"></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Products Table -->
-  <div class="card">
-    <h2>All Flash Sells</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Old</th>
-          <th>Discount</th>
-          <th>Stock</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="flashTableBody"></tbody>
-    </table>
-  </div>
-</div>
-
-<script type="module">
-import { ref, push, onValue, remove, getDatabase } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-/* ===== Use existing Firebase app ===== */
-const db = window.db || getDatabase(); // assumes main admin panel has initialized Firebase
-const flashRef = ref(db, "flashSells");
-
-/* ===== Elements ===== */
-const form = document.getElementById("flashAddForm");
-const tableBody = document.getElementById("flashTableBody");
-
-const nameInput = document.getElementById("fName");
-const priceInput = document.getElementById("fPrice");
-const oldPriceInput = document.getElementById("fOldPrice");
-const discountInput = document.getElementById("fDiscount");
-const stockInput = document.getElementById("fStock");
-const phoneInput = document.getElementById("fPhone");
-const imageInput = document.getElementById("fImage");
-const descriptionInput = document.getElementById("fDescription");
-
-const pImage = document.getElementById("pImage");
-const pName = document.getElementById("pName");
-const pPrice = document.getElementById("pPrice");
-const pOldPrice = document.getElementById("pOldPrice");
-const pDiscount = document.getElementById("pDiscount");
-const pStock = document.getElementById("pStock");
-const pPhone = document.getElementById("pPhone");
-const pDescription = document.getElementById("pDescription");
-
-/* ===== Live Preview ===== */
-function updatePreview() {
-  pImage.src = imageInput.value || "https://via.placeholder.com/320x220";
-  pName.textContent = nameInput.value || "Product Name";
-  pPrice.textContent = `UGX ${priceInput.value ? Number(priceInput.value).toLocaleString("en-UG") : 0}`;
-
-  if(oldPriceInput.value) { pOldPrice.style.display="block"; pOldPrice.textContent=`UGX ${Number(oldPriceInput.value).toLocaleString("en-UG")}`; }
-  else { pOldPrice.style.display="none"; }
-
-  if(discountInput.value) { pDiscount.style.display="block"; pDiscount.textContent=`Discount: ${discountInput.value}%`; }
-  else { pDiscount.style.display="none"; }
-
-  pStock.textContent = `Stock: ${stockInput.value || 0}`;
-  pPhone.textContent = `Phone: ${phoneInput.value || "N/A"}`;
-
-  if(descriptionInput.value) { pDescription.style.display="block"; pDescription.textContent=descriptionInput.value; }
-  else { pDescription.style.display="none"; }
-}
-[nameInput, priceInput, oldPriceInput, discountInput, stockInput, phoneInput, imageInput, descriptionInput].forEach(el=>el.addEventListener("input", updatePreview));
-
-/* ===== Add Product ===== */
-form.addEventListener("submit", async e=>{
-  e.preventDefault();
-  const data = {
-    name: nameInput.value.trim(),
-    price: Number(priceInput.value),
-    oldPrice: oldPriceInput.value ? Number(oldPriceInput.value) : null,
-    discount: discountInput.value ? Number(discountInput.value) : null,
-    stock: stockInput.value ? Number(stockInput.value) : 0,
-    phone: phoneInput.value.trim() || "",
-    image: imageInput.value.trim(),
-    description: descriptionInput.value.trim() || "",
-    createdAt: Date.now()
-  };
-  await push(flashRef, data);
-  form.reset();
-});
-
-/* ===== Load Products ===== */
-onValue(flashRef, snap=>{
-  tableBody.innerHTML = "";
-  if(!snap.exists()) {
-    tableBody.innerHTML = `<tr><td colspan="7">No products found</td></tr>`;
-    return;
-  }
-  snap.forEach(child=>{
-    const item = child.val();
-    const id = child.key;
-    tableBody.innerHTML+=`
-      <tr>
-        <td><img src="${item.image}" onerror="this.src='https://via.placeholder.com/60'"></td>
-        <td>${item.name}</td>
-        <td>UGX ${item.price.toLocaleString("en-UG")}</td>
-        <td>${item.oldPrice ? "UGX "+item.oldPrice.toLocaleString("en-UG") : "-"}</td>
-        <td>${item.discount ?? "-"}%</td>
-        <td>${item.stock}</td>
-        <td><button class="delete" onclick="deleteFlashItem('${id}')"><i class="fas fa-trash"></i></button></td>
-      </tr>
-    `;
-  });
-});
-
-/* ===== Delete Product ===== */
-window.deleteFlashItem = async id=>{
-  if(confirm("Delete this product?")) {
-    await remove(ref(db, `flashSells/${id}`));
-  }
-};
-</script>
-<script type="module">
-import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-/* ===== Use existing Firebase DB or fallback ===== */
-let db;
-try {
-  db = window.db || getDatabase(); // use existing or create a default
-} catch (err) {
-  console.error("Firebase Database not initialized:", err);
-  throw new Error("Firebase DB not initialized. Make sure your admin panel includes Firebase.");
-}
-
-/* ===== Elements ===== */
-const statusText = document.getElementById("maintenanceStatus");
-const toggleBtn = document.getElementById("toggleMaintenanceBtn");
-
-/* ===== Firebase Reference ===== */
-const maintenanceRef = ref(db, "maintenance");
-
-/* ===== Listen to maintenance node ===== */
-let currentStatus = false; // default
-onValue(maintenanceRef, snapshot => {
-  currentStatus = snapshot.exists() ? snapshot.val() : false;
-  statusText.textContent = currentStatus ? "Maintenance Mode: ON" : "Maintenance Mode: OFF";
-  toggleBtn.style.background = currentStatus ? "#e74c3c" : "#25D366";
-  toggleBtn.textContent = currentStatus ? "Turn OFF" : "Turn ON";
-});
-
-/* ===== Toggle Function ===== */
-toggleBtn.addEventListener("click", async () => {
-  try {
-    await set(maintenanceRef, !currentStatus); // flip the value
-  } catch (err) {
-    console.error("Failed to update maintenance status:", err);
-    alert("Failed to update maintenance status. Check console for details.");
-  }
-});
-</script>
-<!-- ================== ADMIN LOGIN MODAL ================== -->
-<div id="adminLoginModal" style="
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:url('https://i.ibb.co/G4Xjn0bn/Screenshot-20260201-212434-Instagram.webp') no-repeat center center/cover;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-">
-  <!-- semi-transparent overlay to darken background -->
-  <div style="
-      position:absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:rgba(0,0,0,0.5);
-  "></div>
-
-  <div id="adminLoginCard" style="
-      position:relative; /* to stay above overlay */
-      background:#fff;
-      padding:30px 25px;
-      border-radius:12px;
-      box-shadow:0 6px 18px rgba(0,0,0,.25);
-      width:100%;
-      max-width:400px;
-      text-align:center;
-      z-index:10;
-  ">
-    <h2 style="margin-bottom:25px;font-weight:700;font-size:1.6rem;color:#111;">Admin Login</h2>
-
-    <input type="email" id="adminEmail" placeholder="Email" style="
-        width:100%;
-        padding:12px;
-        margin-bottom:15px;
-        border:1px solid #ddd;
-        border-radius:6px;
-        font-size:.95rem;
-    ">
-    <input type="password" id="adminPassword" placeholder="Password" style="
-        width:100%;
-        padding:12px;
-        margin-bottom:15px;
-        border:1px solid #ddd;
-        border-radius:6px;
-        font-size:.95rem;
-    ">
-
-    <button id="loginBtn" style="
-        width:100%;
-        padding:12px;
-        border:none;
-        border-radius:8px;
-        background:#25D366;
-        color:#fff;
-        font-size:1rem;
-        font-weight:700;
-        cursor:pointer;
-    ">Login</button>
-
-    <p id="loginError" style="color:red;text-align:center;margin-top:12px;display:none;"></p>
-  </div>
-</div>
-
-<script type="module">
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-/* Use existing Firebase Auth */
-const auth = window.auth || getAuth();
-
-const modal = document.getElementById("adminLoginModal");
-const loginBtn = document.getElementById("loginBtn");
-const emailInput = document.getElementById("adminEmail");
-const passwordInput = document.getElementById("adminPassword");
-const loginError = document.getElementById("loginError");
-
-/* Show login modal only if user not signed in */
-onAuthStateChanged(auth, user => {
-  if(user){
-    modal.style.display = "none";
-  } else {
-    modal.style.display = "flex";
-  }
-});
-
-loginBtn.addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-
-  if (!email || !password) {
-    loginError.textContent = "Please enter email and password.";
-    loginError.style.display = "block";
-    return;
-  }
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    loginError.style.display = "none";
-    modal.style.display = "none"; // hide modal after login
-  } catch (error) {
-    loginError.textContent = error.message;
-    loginError.style.display = "block";
-  }
-});
-</script>
-<script>
-/* ===== Elements ===== */
-const previewFrame = document.getElementById("websitePreview");
-const refreshBtn = document.getElementById("refreshPreview");
-
-/* ===== Refresh Function ===== */
-refreshBtn.addEventListener("click", () => {
-  // Reload the iframe
-  previewFrame.src = previewFrame.src;
-});
-</script>
+  </script>
 </body>
 </html>
