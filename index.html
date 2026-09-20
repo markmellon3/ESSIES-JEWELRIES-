@@ -729,7 +729,7 @@
 
   <!-- External JS -->
   <script type="module" src="script.js"></script>
-  <style>
+<style>
     .maria-popup-overlay {
         position: fixed;
         bottom: 20px;
@@ -795,6 +795,13 @@
         border-radius: 8px;
         margin-bottom: 12px;
     }
+    .maria-popup-body video {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
     .maria-popup-body h4 {
         margin: 0 0 4px 0;
         font-size: 16px;
@@ -852,59 +859,203 @@
         <button class="maria-popup-close" id="maria-close-btn">&times;</button>
     </div>
     <div class="maria-popup-body" id="maria-popup-body">
-        <!-- The SDK will inject the ad image/text here -->
+        <!-- The Popup Renderer will inject the ad representation here -->
     </div>
     <div class="maria-popup-footer">
-        <a href="#" target="_blank" class="maria-btn maria-btn-visit" id="maria-visit-btn">Visit Site</a>
-        <a href="https://markmellon3.github.io/Maria-Ads/signup.html" target="_blank" class="maria-btn maria-btn-create">Create Ad</a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="maria-btn maria-btn-visit" id="maria-visit-btn">Visit Site</a>
+        <a href="https://ads.smmaria.site" target="_blank" rel="noopener noreferrer" class="maria-btn maria-btn-create">Create Ad</a>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- Configuration ---
+        const TARGET_PLACEMENT = 'placement_homepage';
+        
+        // --- State Variables ---
+        let popupInitialized = false;
+        let popupDismissed = false;
+        let observer = null;
+
+        console.log('[Maria Ads] Popup initialized');
+
+        // --- DOM References ---
         const popup = document.getElementById('maria-ad-popup');
         const popupBody = document.getElementById('maria-popup-body');
         const closeBtn = document.getElementById('maria-close-btn');
         const visitBtn = document.getElementById('maria-visit-btn');
 
+        // --- Event Listeners ---
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                popup.classList.remove('show');
-            });
+            closeBtn.addEventListener('click', hidePopup);
         }
 
-        const targetPlacement = document.querySelector('.maria-ad[data-placement="placement_homepage"]');
-        
-        if (targetPlacement) {
-            const observer = new MutationObserver((mutations) => {
+        // --- Initialization ---
+        initializePopup();
+
+        function initializePopup() {
+            const targetPlacement = findTargetPlacement();
+            if (!targetPlacement) return;
+
+            const existingAd = findExistingAd(targetPlacement);
+            if (existingAd) {
+                console.log('[Maria Ads] Ad detected immediately:', existingAd);
+                handleAdDetected(existingAd);
+            } else {
+                observeForAd(targetPlacement);
+            }
+        }
+
+        function findTargetPlacement() {
+            const placement = document.querySelector(`.maria-ad[data-placement="${TARGET_PLACEMENT}"]`);
+            if (!placement) {
+                console.warn('[Maria Ads] Popup placement not found:', TARGET_PLACEMENT);
+            }
+            return placement;
+        }
+
+        function findExistingAd(placement) {
+            return placement.querySelector('.maria-ad-inner');
+        }
+
+        function observeForAd(placement) {
+            console.log('[Maria Ads] Waiting for ad...');
+            observer = new MutationObserver((mutations) => {
                 for (const mutation of mutations) {
                     if (mutation.addedNodes.length > 0) {
-                        const adInner = targetPlacement.querySelector('.maria-ad-inner');
-                        
-                        if (adInner && !popup.classList.contains('show')) {
-                            const destUrl = adInner.getAttribute('href');
-                            
-                            popupBody.innerHTML = '';
-                            popupBody.appendChild(adInner);
-                            
-                            if (destUrl && destUrl !== '#') {
-                                visitBtn.setAttribute('href', destUrl);
-                                visitBtn.style.display = 'block';
-                            } else {
-                                visitBtn.style.display = 'none';
-                            }
-
-                            setTimeout(() => {
-                                popup.classList.add('show');
-                            }, 1000);
-                            
-                            observer.disconnect();
-                            break;
+                        const adInner = findExistingAd(placement);
+                        if (adInner) {
+                            console.log('[Maria Ads] Ad detected via observer:', adInner);
+                            handleAdDetected(adInner);
+                            cleanupObserver();
+                            return;
                         }
                     }
                 }
             });
-            observer.observe(targetPlacement, { childList: true, subtree: true });
+            observer.observe(placement, { childList: true, subtree: true });
+        }
+
+        function cleanupObserver() {
+            if (observer) {
+                observer.disconnect();
+                observer = null;
+            }
+        }
+
+        function handleAdDetected(adInner) {
+            if (popupInitialized || popupDismissed) return;
+            popupInitialized = true;
+
+            const adData = extractAdData(adInner);
+            renderPopupAd(adData);
+            setDestinationUrl(adData.href);
+            showPopup();
+        }
+
+        function extractAdData(adInner) {
+            // Safely extract data attributes and child elements without assuming all exist
+            const data = {
+                adId: adInner.getAttribute('data-ad-id'),
+                clickToken: adInner.getAttribute('data-click-token'),
+                trackingToken: adInner.getAttribute('data-tracking-token'),
+                href: adInner.getAttribute('href'),
+                title: adInner.getAttribute('data-title'),
+                description: adInner.getAttribute('data-description'),
+                imageUrl: adInner.getAttribute('data-image-url'),
+                videoUrl: adInner.getAttribute('data-video-url')
+            };
+
+            // Fallback: try to extract from child elements if data-attributes are missing
+            if (!data.imageUrl) {
+                const img = adInner.querySelector('img');
+                if (img) data.imageUrl = img.src;
+                if (img && !data.title) data.title = img.getAttribute('alt');
+            }
+            if (!data.videoUrl) {
+                const video = adInner.querySelector('video');
+                if (video) data.videoUrl = video.src;
+            }
+            if (!data.title) {
+                const titleEl = adInner.querySelector('h4, .ad-title');
+                if (titleEl) data.title = titleEl.innerText;
+            }
+            if (!data.description) {
+                const descEl = adInner.querySelector('p, .ad-desc');
+                if (descEl) data.description = descEl.innerText;
+            }
+
+            return data;
+        }
+
+        function renderPopupAd(adData) {
+            console.log('[Maria Ads] Rendering popup ad');
+            let html = '';
+
+            if (adData.imageUrl) {
+                html += `<img src="${escapeHtml(adData.imageUrl)}" alt="${escapeHtml(adData.title || 'Advertisement')}" onerror="this.style.display='none'">`;
+            } else if (adData.videoUrl) {
+                html += `<video src="${escapeHtml(adData.videoUrl)}" controls playsinline onerror="this.style.display='none'"></video>`;
+            }
+
+            if (adData.title) {
+                html += `<h4>${escapeHtml(adData.title)}</h4>`;
+            }
+            if (adData.description) {
+                html += `<p>${escapeHtml(adData.description)}</p>`;
+            }
+
+            popupBody.innerHTML = html;
+        }
+
+        function setDestinationUrl(url) {
+            if (validateDestinationUrl(url)) {
+                visitBtn.setAttribute('href', url);
+                visitBtn.style.display = 'block';
+                
+                // Note: If the existing SDK requires a specific JS function to be called 
+                // for click tracking instead of just relying on the href redirect, 
+                // you would bind to visitBtn.onclick here and call that SDK function.
+            } else {
+                // Hide button if URL is invalid or missing
+                visitBtn.style.display = 'none';
+            }
+        }
+
+        function validateDestinationUrl(url) {
+            if (!url) return false;
+            try {
+                const parsed = new URL(url);
+                return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function showPopup() {
+            if (popupDismissed) return;
+            setTimeout(() => {
+                popup.classList.add('show');
+                console.log('[Maria Ads] Popup displayed');
+                
+                // Note: If the existing SDK has an impression tracking function 
+                // that needs to be fired when the popup becomes visible, 
+                // call it here.
+            }, 1000);
+        }
+
+        function hidePopup() {
+            popup.classList.remove('show');
+            popupDismissed = true;
+            console.log('[Maria Ads] Popup dismissed by user');
+        }
+
+        // --- Helpers ---
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
         }
     });
 </script>
