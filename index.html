@@ -730,16 +730,19 @@
   <!-- External JS -->
   <script type="module" src="script.js"></script>
 <style>
+    /* ==========================================
+       1. LARGE AD CARD (POPUP)
+       ========================================== */
     .maria-popup-overlay {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 360px;
-        max-width: calc(100% - 40px);
+        width: 380px;
+        max-width: calc(300% - 50px);
         background: #ffffff;
         border-radius: 16px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        z-index: 9999;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        z-index: 10000;
         opacity: 0;
         transform: translateY(100px);
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -760,47 +763,44 @@
     }
     .maria-popup-sponsor {
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         color: #64748b;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
     .maria-popup-close {
-        background: none;
+        background: #ef4444;
         border: none;
-        color: #94a3b8;
-        font-size: 24px;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: bold;
         cursor: pointer;
-        padding: 0;
+        width: 28px;
+        height: 28px;
         line-height: 1;
-        transition: color 0.2s;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
     }
     .maria-popup-close:hover {
-        color: #ef4444;
+        background: #dc2626;
     }
     .maria-popup-body {
         padding: 16px;
+        max-height: 70vh;
+        overflow-y: auto;
     }
-    .maria-popup-body .maria-ad-inner {
-        display: block;
-        text-decoration: none;
-        color: inherit;
-    }
-    /* FIX: Entire image is shown without cropping */
     .maria-popup-body img {
         width: 100%;
         height: auto;
-        max-height: none;
+        max-height: 350px;
+        object-fit: contain;
         display: block;
         border-radius: 8px;
         margin-bottom: 12px;
-    }
-    .maria-popup-body video {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 8px;
-        margin-bottom: 12px;
+        background: #f1f5f9;
     }
     .maria-popup-body h4 {
         margin: 0 0 4px 0;
@@ -812,6 +812,7 @@
         margin: 0;
         font-size: 14px;
         color: #64748b;
+        line-height: 1.4;
     }
     .maria-popup-footer {
         display: flex;
@@ -820,12 +821,12 @@
     }
     .maria-btn {
         flex: 1;
-        padding: 10px;
+        padding: 12px;
         border-radius: 8px;
         text-align: center;
         text-decoration: none;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 700;
         transition: all 0.2s;
     }
     .maria-btn-visit {
@@ -836,13 +837,89 @@
         background: #4338ca;
     }
     .maria-btn-create {
-        background: #f1f5f9;
-        color: #334155;
-        border: 1px solid #e2e8f0;
+        background: #fbbf24;
+        color: #78350f;
+        border: 1px solid #f59e0b;
     }
     .maria-btn-create:hover {
-        background: #e2e8f0;
+        background: #f59e0b;
     }
+
+    /* ==========================================
+       2. SMALL BANNER (Appears after popup close)
+       ========================================== */
+    .maria-banner-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        padding: 15px;
+        background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+        pointer-events: none; 
+        opacity: 0;
+        transform: translateY(100px);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .maria-banner-container.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .maria-banner {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 500px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        padding: 12px;
+        text-decoration: none;
+        color: inherit;
+        gap: 12px;
+        pointer-events: auto; 
+        border: 1px solid #e2e8f0;
+    }
+    .maria-banner-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        object-fit: cover;
+        flex-shrink: 0;
+        background: #f1f5f9;
+    }
+    .maria-banner-content {
+        flex: 1;
+        overflow: hidden;
+    }
+    .maria-banner-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: #1e293b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .maria-banner-desc {
+        font-size: 12px;
+        color: #64748b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .maria-banner-cta {
+        background: #4f46e5;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+        align-self: center;
+    }
+
     @media (max-width: 480px) {
         .maria-popup-overlay {
             left: 10px;
@@ -850,22 +927,20 @@
             bottom: 10px;
             width: auto;
         }
+        .maria-popup-body img {
+            max-height: 250px;
+        }
+        .maria-banner {
+            max-width: calc(100% - 20px);
+        }
     }
 </style>
 
-<div id="maria-ad-popup" class="maria-popup-overlay">
-    <div class="maria-popup-header">
-        <span class="maria-popup-sponsor">Sponsored by Maria Ads</span>
-        <button class="maria-popup-close" id="maria-close-btn">&times;</button>
-    </div>
-    <div class="maria-popup-body" id="maria-popup-body">
-        <!-- The Popup Renderer will inject the ad representation here -->
-    </div>
-    <div class="maria-popup-footer">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="maria-btn maria-btn-visit" id="maria-visit-btn">Visit Site</a>
-        <a href="https://ads.smmaria.site" target="_blank" rel="noopener noreferrer" class="maria-btn maria-btn-create">Create Ad</a>
-    </div>
-</div>
+<!-- Large Ad Card Container -->
+<div id="maria-ad-popup" class="maria-popup-overlay"></div>
+
+<!-- Small Banner Container -->
+<div id="maria-banner-container" class="maria-banner-container"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -874,21 +949,13 @@
         
         // --- State Variables ---
         let popupInitialized = false;
-        let popupDismissed = false;
         let observer = null;
 
         console.log('[Maria Ads] Popup initialized');
 
         // --- DOM References ---
-        const popup = document.getElementById('maria-ad-popup');
-        const popupBody = document.getElementById('maria-popup-body');
-        const closeBtn = document.getElementById('maria-close-btn');
-        const visitBtn = document.getElementById('maria-visit-btn');
-
-        // --- Event Listeners ---
-        if (closeBtn) {
-            closeBtn.addEventListener('click', hidePopup);
-        }
+        const popupContainer = document.getElementById('maria-ad-popup');
+        const bannerContainer = document.getElementById('maria-banner-container');
 
         // --- Initialization ---
         initializePopup();
@@ -944,37 +1011,34 @@
         }
 
         function handleAdDetected(adInner) {
-            if (popupInitialized || popupDismissed) return;
+            if (popupInitialized) return;
             popupInitialized = true;
 
             const adData = extractAdData(adInner);
+            
+            // Hide original ad container so it doesn't show duplicate/raw data
+            const targetPlacement = findTargetPlacement();
+            if (targetPlacement) {
+                targetPlacement.style.display = 'none';
+            }
+            
             renderPopupAd(adData);
-            setDestinationUrl(adData.href);
+            renderBannerAd(adData); // Prepare banner in background
             showPopup();
         }
 
         function extractAdData(adInner) {
-            // Safely extract data attributes and child elements without assuming all exist
             const data = {
-                adId: adInner.getAttribute('data-ad-id'),
-                clickToken: adInner.getAttribute('data-click-token'),
-                trackingToken: adInner.getAttribute('data-tracking-token'),
-                href: adInner.getAttribute('href'),
-                title: adInner.getAttribute('data-title'),
+                destinationUrl: adInner.getAttribute('data-destination-url') || adInner.getAttribute('href'),
+                title: adInner.getAttribute('data-title') || adInner.getAttribute('data-brand-name'),
                 description: adInner.getAttribute('data-description'),
-                imageUrl: adInner.getAttribute('data-image-url'),
-                videoUrl: adInner.getAttribute('data-video-url')
+                imageUrl: adInner.getAttribute('data-image-url') || adInner.getAttribute('data-brand-logo')
             };
 
-            // Fallback: try to extract from child elements if data-attributes are missing
+            // Fallbacks
             if (!data.imageUrl) {
                 const img = adInner.querySelector('img');
                 if (img) data.imageUrl = img.src;
-                if (img && !data.title) data.title = img.getAttribute('alt');
-            }
-            if (!data.videoUrl) {
-                const video = adInner.querySelector('video');
-                if (video) data.videoUrl = video.src;
             }
             if (!data.title) {
                 const titleEl = adInner.querySelector('h4, .ad-title');
@@ -988,40 +1052,81 @@
             return data;
         }
 
+        // ==========================================
+        // LARGE POPUP LOGIC
+        // ==========================================
         function renderPopupAd(adData) {
-            console.log('[Maria Ads] Rendering popup ad');
-            let html = '';
-
-            if (adData.imageUrl) {
-                html += `<img src="${escapeHtml(adData.imageUrl)}" alt="${escapeHtml(adData.title || 'Advertisement')}" onerror="this.style.display='none'">`;
-            } else if (adData.videoUrl) {
-                html += `<video src="${escapeHtml(adData.videoUrl)}" controls playsinline onerror="this.style.display='none'"></video>`;
+            if (!validateDestinationUrl(adData.destinationUrl)) {
+                console.warn('[Maria Ads] Invalid or missing destination URL.');
+                return;
             }
 
-            if (adData.title) {
-                html += `<h4>${escapeHtml(adData.title)}</h4>`;
-            }
-            if (adData.description) {
-                html += `<p>${escapeHtml(adData.description)}</p>`;
-            }
-
-            popupBody.innerHTML = html;
-        }
-
-        function setDestinationUrl(url) {
-            if (validateDestinationUrl(url)) {
-                visitBtn.setAttribute('href', url);
-                visitBtn.style.display = 'block';
-                
-                // Note: If the existing SDK requires a specific JS function to be called 
-                // for click tracking instead of just relying on the href redirect, 
-                // you would bind to visitBtn.onclick here and call that SDK function.
-            } else {
-                // Hide button if URL is invalid or missing
-                visitBtn.style.display = 'none';
+            const html = `
+                <div class="maria-popup-header">
+                    <span class="maria-popup-sponsor">Sponsored by Maria Ads</span>
+                    <button class="maria-popup-close" id="maria-close-btn" aria-label="Close ad">&times;</button>
+                </div>
+                <div class="maria-popup-body">
+                    ${adData.imageUrl ? `<img src="${escapeHtml(adData.imageUrl)}" alt="${escapeHtml(adData.title || 'Advertisement')}" onerror="this.style.display='none'">` : ''}
+                    ${adData.title ? `<h4>${escapeHtml(adData.title)}</h4>` : ''}
+                    ${adData.description ? `<p>${escapeHtml(adData.description)}</p>` : ''}
+                </div>
+                <div class="maria-popup-footer">
+                    <a href="${escapeHtml(adData.destinationUrl)}" target="_blank" rel="noopener noreferrer" class="maria-btn maria-btn-visit">Visit Site</a>
+                    <a href="https://ads.smmaria.site" target="_blank" rel="noopener noreferrer" class="maria-btn maria-btn-create">Create Ad</a>
+                </div>
+            `;
+            
+            popupContainer.innerHTML = html;
+            
+            const closeBtn = document.getElementById('maria-close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', hidePopup);
             }
         }
 
+        function showPopup() {
+            setTimeout(() => {
+                popupContainer.classList.add('show');
+                console.log('[Maria Ads] Large popup displayed');
+            }, 1000);
+        }
+
+        function hidePopup() {
+            popupContainer.classList.remove('show');
+            console.log('[Maria Ads] Large popup dismissed, showing banner...');
+            
+            // Show the banner after the popup closes
+            setTimeout(() => {
+                showBanner();
+            }, 500);
+        }
+
+        // ==========================================
+        // SMALL BANNER LOGIC
+        // ==========================================
+        function renderBannerAd(adData) {
+            if (!validateDestinationUrl(adData.destinationUrl)) return;
+
+            const html = `
+                <a href="${escapeHtml(adData.destinationUrl)}" target="_blank" rel="noopener noreferrer" class="maria-banner">
+                    ${adData.imageUrl ? `<img src="${escapeHtml(adData.imageUrl)}" alt="${escapeHtml(adData.title || 'Advertisement')}" class="maria-banner-logo" onerror="this.style.display='none'">` : ''}
+                    <div class="maria-banner-content">
+                        <div class="maria-banner-title">${escapeHtml(adData.title || 'Sponsored')}</div>
+                        <div class="maria-banner-desc">${escapeHtml(adData.description || 'Click to learn more')}</div>
+                    </div>
+                    <div class="maria-banner-cta">View</div>
+                </a>
+            `;
+            bannerContainer.innerHTML = html;
+        }
+
+        function showBanner() {
+            bannerContainer.classList.add('show');
+            console.log('[Maria Ads] Banner displayed');
+        }
+
+        // --- Helpers ---
         function validateDestinationUrl(url) {
             if (!url) return false;
             try {
@@ -1032,25 +1137,6 @@
             }
         }
 
-        function showPopup() {
-            if (popupDismissed) return;
-            setTimeout(() => {
-                popup.classList.add('show');
-                console.log('[Maria Ads] Popup displayed');
-                
-                // Note: If the existing SDK has an impression tracking function 
-                // that needs to be fired when the popup becomes visible, 
-                // call it here.
-            }, 1000);
-        }
-
-        function hidePopup() {
-            popup.classList.remove('show');
-            popupDismissed = true;
-            console.log('[Maria Ads] Popup dismissed by user');
-        }
-
-        // --- Helpers ---
         function escapeHtml(str) {
             if (!str) return '';
             const div = document.createElement('div');
